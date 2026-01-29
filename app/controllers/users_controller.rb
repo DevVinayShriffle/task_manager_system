@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authorize_request, except: [:create, :login]
+  before_action :authorize_request, :authorize_user, except: [:create, :login]
   # before_action :find_user, except: [:create]
 
   # def index
@@ -15,20 +15,20 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = User.find_by(id: params[:id])
-    byebug
-    user.update!(password: params[:user][:password])
-    render json: {message: "User updated successfully."}
+    @user = User.find_by(id: params[:id])
+    # byebug
+    @user.update!(password: params[:user][:password])
+    render json: {message: "User updated successfully."}, status: :ok
   end
 
   def destroy
-    user = User.find(params[:id])
-    user.destroy
+    @user = User.find(params[:id])
+    @user.destroy
     render json: {message: "User deleted Successfully."}, status: :ok
   end
 
   def login
-    @user = User.find_by(email: params[:user][:email])
+    @user = User.find_by(email: params[:user][:email].strip.downcase)
    
     if(@user && @user.authenticate(params[:user][:password]))
       set_token
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
         email: @user.email,
       }, status: :ok
     else
-      render json: {message: "Invalid Credentials."}
+      render json: {message: "Invalid email or password."}
     end
   end
 
@@ -54,4 +54,11 @@ class UsersController < ApplicationController
       
     response.headers['Authorization'] = "Bearer #{token}"
   end
+
+  # def authorize_user
+  #   # byebug
+  #   if (@current_user.id != params[:id].to_i)
+  #     render json: {message: "You are not authorize for this action."}, status: :unauthorized
+  #   end
+  # end
 end
