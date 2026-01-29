@@ -15,30 +15,30 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = User.find_by(params[:email])
-    user.update!(params[:password])
+    user = User.find_by(id: params[:id])
+    byebug
+    user.update!(password: params[:user][:password])
+    render json: {message: "User updated successfully."}
   end
 
   def destroy
-    user = User.find_by(params[:email])
+    user = User.find(params[:id])
     user.destroy
     render json: {message: "User deleted Successfully."}, status: :ok
   end
 
   def login
-    # user_params
     @user = User.find_by(email: params[:user][:email])
    
     if(@user && @user.authenticate(params[:user][:password]))
-      # token = JsonWebToken.encode(user_id: @user.id)
-      # time = Time.now + 24.hours.to_i
-      
-      # response.headers['Authorization'] = "Bearer #{token}"
       set_token
       render json: { 
+        id: @user.id,
         message: 'Logged in successfully',
         email: @user.email,
       }, status: :ok
+    else
+      render json: {message: "Invalid Credentials."}
     end
   end
 
