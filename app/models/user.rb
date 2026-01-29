@@ -6,7 +6,7 @@ class User < ApplicationRecord
   validates :password, presence:true, on: [:create, :update]
   # validate :password_format, on: [:create, :update]
 
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
 
   before_validation :normalize_email, :normalize_password
   # after_validation has_secure_password
