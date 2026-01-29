@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def create
     @user = User.create!(user_params)
     set_token
-    render json: @user, status: :created
+    render json: @user, serializer: UserSerializer, status: :created
   end
 
   def update
@@ -32,11 +32,14 @@ class UsersController < ApplicationController
    
     if(@user && @user.authenticate(params[:user][:password]))
       set_token
-      render json: { 
-        id: @user.id,
-        message: 'Logged in successfully',
-        email: @user.email,
-      }, status: :ok
+      
+      render json: {
+      message: "Logged in successfully",
+      user: ActiveModelSerializers::SerializableResource.new(
+        @user,
+        serializer: UserSerializer
+      )
+    }, status: :ok
     else
       render json: {message: "Invalid email or password."}
     end

@@ -5,21 +5,21 @@ class TasksController < ApplicationController
 
   def index
     tasks = @user.tasks
-    render json: tasks, status: :ok
+    render json: tasks, each_serializer: TaskSerializer, status: :ok
   end
 
   def show
-    render json: @task, status: :ok
+    render json: @task, serializer: TaskSerializer, status: :ok
   end
 
   def create
     task = @user.tasks.create!(task_params)
-    render json: task, status: :created
+    render json: task, serializer: TaskSerializer, status: :created
   end
 
   def update
     if @task.update!(task_params)
-      render json: @task, status: :ok
+      render json: @task, serializer: TaskSerializer, status: :ok
     end
   end
 
