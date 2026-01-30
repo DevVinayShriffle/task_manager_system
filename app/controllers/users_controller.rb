@@ -1,22 +1,14 @@
 class UsersController < ApplicationController
   before_action :authorize_request, :authorize_user, except: [:create, :login]
-  # before_action :find_user, except: [:create]
-
-  # def index
-  # end
-
-  # def show
-  # end
 
   def create
-    @user = User.create!(user_params)
-    set_token
-    render json: @user, serializer: UserSerializer, status: :created
+    user = User.create!(user_params)
+    set_token(user)
+    render json: user, serializer: UserSerializer, status: :created
   end
 
   def update
     @user = User.find_by(id: params[:id])
-    # byebug
     @user.update!(password: params[:user][:password])
     render json: {message: "User updated successfully."}, status: :ok
   end
@@ -28,19 +20,18 @@ class UsersController < ApplicationController
   end
 
   def login
-    # byebug
-    @user = User.find_by(email: params[:user][:email].strip.downcase)
+    user = User.find_by(email: params[:user][:email].strip.downcase)
    
-    if(@user && @user.authenticate(params[:user][:password]))
-      set_token
+    if(user && user.authenticate(params[:user][:password]))
+      set_token(user)
       
       render json: {
-      message: "Logged in successfully",
-      user: ActiveModelSerializers::SerializableResource.new(
-        @user,
-        serializer: UserSerializer
-      )
-    }, status: :ok
+        message: "Logged in successfully",
+        user: ActiveModelSerializers::SerializableResource.new(
+          user,
+          serializer: UserSerializer
+        )
+      }, status: :ok
     else
       render json: {message: "Invalid email or password."}
     end
@@ -52,17 +43,9 @@ class UsersController < ApplicationController
     params.require(:user).permit(:email, :password)
   end
 
-  def set_token
-    token = JsonWebToken.encode(user_id: @user.id)
-    time = Time.now + 24.hours.to_i
+  def set_token(user)
+    token = JsonWebToken.encode(user_id: user.id)
       
     response.headers['Authorization'] = "Bearer #{token}"
   end
-
-  # def authorize_user
-  #   # byebug
-  #   if (@current_user.id != params[:id].to_i)
-  #     render json: {message: "You are not authorize for this action."}, status: :unauthorized
-  #   end
-  # end
 end

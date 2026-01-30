@@ -1,11 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
 
-  # validates :email, presence:true, uniqueness:true, on: :create
-  # validate :email_format, on: :create
-  # validates :password, presence:true, on: [:create, :update]
-  # validate :password_format, on: [:create, :update]
-
   validates :email,
             presence: true,
             uniqueness: true,
@@ -17,18 +12,13 @@ class User < ApplicationRecord
   validates :password,
             presence: true,
             format: {
-              with: /\A(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,8}\z/,
-              message: "must include 1 uppercase, 1 lowercase, 1 special character, 1 number and has length between 6 to 8 characters."
+              with: /\A(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9])\S{6,8}\z/,
+              message: "must include 1 uppercase, 1 lowercase, 1 special character, 1 number, has length between 6 to 8 characters and does not contain any spaces."
             }
   
   has_many :tasks, dependent: :destroy
 
   before_validation :normalize_email, :normalize_password
-  # after_validation has_secure_password
-
-  # def password=(new_password)
-  #   super(new_password.strip) if new_password.present?
-  # end
 
   private
 
@@ -37,20 +27,6 @@ class User < ApplicationRecord
   end
 
   def normalize_password
-    Rails.logger.info(password_digest)
     self.password = password.strip if password.present?
   end
-
-  # def email_format
-  #   if (!self.email.match(/\A[^@\s]+@[^@\s]+\.[^@\s]+\z/))
-  #     errors.add("is not a valid email.")
-  #   end
-  # end
-
-  # def password_format
-  #   if (!self.password.match(/[A-Z](?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{5,7}$/))
-  #   if (!self.password.match(/\A(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,8}\z/))
-  #     errors.add("is not a valid password.")
-  #   end
-  # end
 end
