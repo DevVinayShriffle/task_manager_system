@@ -39,7 +39,11 @@ class TasksController < ApplicationController
   end
 
   def set_task
-    @task = @user.tasks.find(params[:id])
+    # byebug
+    @task = @user.tasks.find_by(id: params[:id])
+    if (!@task)
+      return render json: {message: "Could not find tasks."}, status: :not_found
+    end
   end
 
   def task_params

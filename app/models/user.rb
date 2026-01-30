@@ -37,6 +37,7 @@ class User < ApplicationRecord
   end
 
   def normalize_password
+    Rails.logger.info(password_digest)
     self.password = password.strip if password.present?
   end
 

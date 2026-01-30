@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
 
   def authorize_request
     header = request.headers['Authorization']
+    # byebug
+    if (!header)
+      return render json: {message: "Missing token.", status: :unauthorized}, status: :unauthorized
+    end
     header = header.split(' ').last if header
     begin
       @decoded = JsonWebToken.decode(header)
@@ -32,6 +36,10 @@ class ApplicationController < ActionController::Base
       render json: {message: "You are not authorize for this action."}, status: :unauthorized
     end
   end
+
+  # def normalize_password
+  #   params[:user][:password] = params[:user][:password].strip
+  # end
 
   # def authorize_user_tasks
   #   if (@current_user.id != params[:user_id].to_i)

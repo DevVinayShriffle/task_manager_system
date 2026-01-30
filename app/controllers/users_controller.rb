@@ -28,6 +28,7 @@ class UsersController < ApplicationController
   end
 
   def login
+    # byebug
     @user = User.find_by(email: params[:user][:email].strip.downcase)
    
     if(@user && @user.authenticate(params[:user][:password]))
