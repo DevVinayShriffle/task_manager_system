@@ -18,14 +18,14 @@ class UsersController < ApplicationController
     render json: {message: "User updated successfully."}, status: :ok
   end
 
-  # def destroy
-  #   @user = User.find(params[:id])
-  #   if @user.destroy
-  #     render json: {message: "User deleted Successfully."}, status: :ok
-  #   else
-  #     render json: {}
-  #   end
-  # end
+  def destroy
+    @user = User.find(params[:id])
+    if @user.destroy
+      render json: {message: "User deleted Successfully."}, status: :ok
+    else
+      render json: {message: "User not deleted."}, status: :unprocessable_entity
+    end
+  end
 
   def login
     user = User.find_by(email: params[:user][:email].strip.downcase)

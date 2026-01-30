@@ -24,8 +24,11 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task.destroy
-    render json: {message: "Task deleted successfully."}, status: :ok
+    if @task.destroy
+      render json: {message: "Task deleted successfully."}, status: :ok
+    else
+      render json: {message: "User not deleted."}, status: :unprocessable_entity
+    end
   end
 
   private

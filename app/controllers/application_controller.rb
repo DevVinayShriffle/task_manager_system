@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   rescue_from  ActiveRecord::RecordNotUnique, with: :record_not_unique
 
   def authorize_request
-    header = get_header
+    header = request.headers['Authorization']&.split(' ')&.last
     if header.present?
       begin
         @decoded = JsonWebToken.decode(header)
@@ -19,10 +19,6 @@ class ApplicationController < ActionController::Base
     else
       render json: {message: "Missing token.", status: :unauthorized}, status: :unauthorized
     end
-  end
-
-  def get_header
-    header = request.headers['Authorization']&.split(' ')&.last
   end
 
   def authorize_user    
