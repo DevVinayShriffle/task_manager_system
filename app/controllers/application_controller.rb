@@ -16,17 +16,13 @@ class ApplicationController < ActionController::Base
       rescue JWT::DecodeError => e
         render json: {errors: e.message}, status: :unauthorized
       end
+    else
+      render json: {message: "Missing token.", status: :unauthorized}, status: :unauthorized
     end
   end
 
   def get_header
-    header = request.headers['Authorization']
-    if header.present?
-      header.split(' ').last
-    else
-      render json: {message: "Missing token.", status: :unauthorized}, status: :unauthorized
-      return nil
-    end
+    header = request.headers['Authorization']&.split(' ')&.last
   end
 
   def authorize_user    
