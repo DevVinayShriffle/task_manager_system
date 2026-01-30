@@ -6,23 +6,38 @@ class ApplicationController < ActionController::Base
   rescue_from  ActiveRecord::RecordNotUnique, with: :record_not_unique
 
   def authorize_request
-    header = request.headers['Authorization']
-    if (!header)
-      return render json: {message: "Missing token.", status: :unauthorized}, status: :unauthorized
+    header = get_header
+    if header.present?
+      begin
+        @decoded = JsonWebToken.decode(header)
+        @current_user = User.find(@decoded[:user_id])
+      rescue ActiveRecord::RecordNotFound => e
+        render json: {errors: e.message}, status: :unauthorized
+      rescue JWT::DecodeError => e
+        render json: {errors: e.message}, status: :unauthorized
+      end
     end
-    header = header.split(' ').last if header
-    begin
-      @decoded = JsonWebToken.decode(header)
-      @current_user = User.find(@decoded[:user_id])
-    rescue ActiveRecord::RecordNotFound => e
-      render json: {errors: e.message}, status: :unauthorized
-    rescue JWT::DecodeError => e
-      render json: {errors: e.message}, status: :unauthorized
+  end
+
+  def get_header
+    header = request.headers['Authorization']
+    if header.present?
+      header.split(' ').last
+    else
+      render json: {message: "Missing token.", status: :unauthorized}, status: :unauthorized
+      return nil
     end
   end
 
   def authorize_user    
     render json: {message: "You are not authorize for this action."}, status: :unauthorized if (@current_user.id != params[:id].to_i)
+  end
+
+  def render_with_serializer(object, serializer, message, status)
+    render json: {
+      message: message,
+      user: ActiveModelSerializers::SerializableResource.new(object, serializer: serializer)
+    }, status: status
   end
 
   private
