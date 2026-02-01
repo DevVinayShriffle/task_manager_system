@@ -3,24 +3,24 @@ class UsersController < ApplicationController
 
   def create
     user = User.create!(user_params)
-    set_token(user)
-    # render json: user, serializer: UserSerializer, status: :created
-    # render json:{
-    #   message: "User Registered Successfully.",
-    #   user: user,serializer: UserSerializer
-    # }, status: ok
-    render_with_serializer(user, UserSerializer, "User Created Successfully.", :created)
+    token = set_token(user)
+    
+    render json: user,
+       serializer: AuthSerializer,
+       message: "User Registered Successfully.",
+       token: token,
+       status: :ok
   end
 
   def update
-    @user = User.find_by(id: params[:id])
-    @user.update!(password: params[:user][:password])
+    user = User.find_by(id: params[:id])
+    user.update!(password: params[:user][:password])
     render json: {message: "User updated successfully."}, status: :ok
   end
 
   def destroy
-    @user = User.find(params[:id])
-    if @user.destroy
+    user = User.find(params[:id])
+    if user.destroy
       render json: {message: "User deleted Successfully."}, status: :ok
     else
       render json: {message: "User not deleted."}, status: :unprocessable_entity
@@ -31,15 +31,13 @@ class UsersController < ApplicationController
     user = User.find_by(email: params[:user][:email].strip.downcase)
    
     if(user && user.authenticate(params[:user][:password]))
-      set_token(user)
-      
-      render json: {
-        message: "Logged in successfully",
-        user: ActiveModelSerializers::SerializableResource.new(
-          user,
-          serializer: UserSerializer
-        )
-      }, status: :ok
+      token = set_token(user)
+    
+      render json: user,
+       serializer: AuthSerializer,
+       message: "Logged in Successfully.",
+       token: token,
+       status: :ok
     else
       render json: {message: "Invalid email or password."}
     end
@@ -53,7 +51,7 @@ class UsersController < ApplicationController
 
   def set_token(user)
     token = JsonWebToken.encode(user_id: user.id)
-      
-    response.headers['Authorization'] = "Bearer #{token}"
+    token = "Bearer #{token}"
+    response.headers['Authorization'] = token
   end
 end

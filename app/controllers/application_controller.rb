@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
   rescue_from ActionController::ParameterMissing, with: :parameter_missing
-  rescue_from  ActiveRecord::RecordNotUnique, with: :record_not_unique
+  rescue_from NoMethodError, with: :no_method_error
+  # rescue_from StandardError, with: :internal_server_error
 
   def authorize_request
     header = request.headers['Authorization']&.split(' ')&.last
@@ -21,46 +22,57 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def authorize_user    
+  def authorize_user
     render json: {message: "You are not authorize for this action."}, status: :unauthorized if (@current_user.id != params[:id].to_i)
-  end
-
-  def render_with_serializer(object, serializer, message, status)
-    render json: {
-      message: message,
-      user: ActiveModelSerializers::SerializableResource.new(object, serializer: serializer)
-    }, status: status
   end
 
   private
 
   def record_not_found(error)
     render json: {
-      error: error.message
+      status: 404,
+      error: "Record Not Found",
+      message: error.message
     }, status: :not_found
   end
 
   def record_invalid(error)
     render json: {
-      error: error.record.errors.full_messages
+      status: 422,
+      error: "Validation Failed",
+      message: error.record.errors.full_messages
     }, status: :unprocessable_entity
   end
 
   def parameter_missing(error)
     render json: {
-      error: error.message
+      status: 400,
+      error: "Bad Request",
+      message: error.message
     }, status: :bad_request
   end
 
-  def record_not_unique(error)
+  def no_method_error(error)
     render json: {
-      error: error.message
+      status: 500,
+      error: "Internal Server Error",
+      message: error.message
+    }, status: :internal_server_error
+  end
+
+  def internal_server_error(error)
+    render json: {
+      status: 500,
+      error: "Internal Server Error",
+      message: "Something went wrong"
     }, status: :internal_server_error
   end
 
   def unauthorized
     render json: {
-      error: "Unauthorized access."
+      status: 401,
+      error: "Unauthorized",
+      message: "You are not authorized to perform this action"
     }, status: :unauthorized
   end
 
