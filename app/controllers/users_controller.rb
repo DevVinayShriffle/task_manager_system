@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authorize_request, :authorize_user, except: [:create, :login]
+  before_action :authorize_request, except: [:create, :login]
 
   def create
     user = User.create!(user_params)
@@ -8,14 +8,14 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = User.find_by(id: params[:id])
-    user.update!(password: params[:user][:password])
-    render json: {user: UserSerializer.new(user), meta: {message: "User updated successfully."}}, status: :ok
+    if @current_user.update!(password: params[:user][:password])
+      user = User.find_by(id: @current_user[:id])
+      render json: {user: UserSerializer.new(user), message: "User updated successfully."}, status: :ok
+    end
   end
 
   def destroy
-    user = User.find(params[:id])
-    if user.destroy
+    if @current_user.destroy
       render json: {message: "User deleted Successfully."}, status: :ok
     else
       render json: {message: "User not deleted."}, status: :unprocessable_entity
