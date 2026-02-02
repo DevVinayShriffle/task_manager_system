@@ -22,7 +22,11 @@ class ApplicationController < ActionController::Base
 
   def decoded_present(header)
     @decoded = JsonWebToken.decode(header)
-    render json: {message: "Token expired."},status: :unauthorized unless @decoded.present? 
+    if @decoded.blank?
+      render json: {message: "Token invalid."},status: :unauthorized
+    elsif Time.current > @decoded[:exp]
+      render json: {message: "Token expired."}, status: :unauthorized
+    end 
   end
 
   def authorize_user
