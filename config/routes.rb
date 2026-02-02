@@ -6,11 +6,11 @@ Rails.application.routes.draw do
 
   # post '/users/login', to: 'users#login'
   # resource :users, controller: 'users', only: [:update, :destroy]
-  resources :users, only: [:create]
+  # resources :users, only: [:create]
 
-  resource :users, controller: users, only: [:update, :destroy] do
-    post '/login', on: :collection
-    resources :tasks, controller: tasks, path: 'tasks'
+  resource :users, only: [:create, :update, :destroy] do
+    post :login, on: :collection
+    resources :tasks
   end
 
 end
