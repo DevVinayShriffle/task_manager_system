@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
   rescue_from ActionController::ParameterMissing, with: :parameter_missing
   rescue_from NoMethodError, with: :no_method_error
+  rescue_from ArgumentError, with: :enum_argument_error
+
   # rescue_from StandardError, with: :internal_server_error
 
   def authorize_request
@@ -27,10 +29,6 @@ class ApplicationController < ActionController::Base
     elsif Time.current > @decoded[:exp]
       render json: {message: "Token expired."}, status: :unauthorized
     end 
-  end
-
-  def authorize_user
-    render json: {message: "You are not authorize for this action."}, status: :unauthorized if (@current_user.id != params[:id].to_i)
   end
 
   private
@@ -75,12 +73,15 @@ class ApplicationController < ActionController::Base
     }, status: :internal_server_error
   end
 
-  def unauthorized
-    render json: {
-      status: 401,
-      error: "Unauthorized",
-      message: "You are not authorized to perform this action"
-    }, status: :unauthorized
+  def enum_argument_error(error)
+    if error.message.include?("is not a valid status")
+      render json: {
+        status: 422,
+        error: "Validation error",
+        message: error.message
+      }, status: :unprocessable_entity
+    else
+      raise error
+    end
   end
-
 end

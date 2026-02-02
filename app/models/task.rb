@@ -2,7 +2,7 @@ class Task < ApplicationRecord
   enum :status, {pending: 0, progress: 1, completed: 2}
 
   validates :title, presence:true
-  validates :status, inclusion: {in: statuses.keys, message: "is not a valid status."}
+  validates :status, inclusion: {in: statuses.keys, status: :enum_argument_error}
 
   belongs_to :user
 
