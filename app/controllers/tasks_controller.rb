@@ -15,6 +15,7 @@ class TasksController < ApplicationController
       #  status: :ok
 
       render json: TaskSerializer.new(tasks).as_json, message: "All tasks", status: :ok
+
     end
   end
 
@@ -28,12 +29,14 @@ class TasksController < ApplicationController
 
   def create
     task = @user.tasks.create!(task_params)
-    render json: task, serializer: TaskSerializer, status: :created
+    render json: {task: TaskSerializer.new(task), meta:{message: "Task created successfully."}}, status: :created
+    # render json: task, serializer: TaskSerializer, status: :created
   end
 
   def update
-    if @task.update!(task_params)
-      render json: @task, serializer: TaskSerializer, status: :ok
+    task = @task.update!(task_params)
+    if task.present?
+      render json: {task: TaskSerializer.new(task), meta: {message: "Task updated successfully"}}, status: :ok
     end
   end
 

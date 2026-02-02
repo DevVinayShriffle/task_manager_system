@@ -4,18 +4,13 @@ class UsersController < ApplicationController
   def create
     user = User.create!(user_params)
     token = set_token(user)
-    
-    render json: user,
-       serializer: AuthSerializer,
-       message: "User Registered Successfully.",
-       token: token,
-       status: :ok
+    render json: {user: UserSerializer.new(user), meta: {token: token, message: "User registered successfully."}}, status: :ok
   end
 
   def update
     user = User.find_by(id: params[:id])
     user.update!(password: params[:user][:password])
-    render json: {message: "User updated successfully."}, status: :ok
+    render json: {user: UserSerializer.new(user), meta: {message: "User updated successfully."}}, status: :ok
   end
 
   def destroy
@@ -32,12 +27,7 @@ class UsersController < ApplicationController
    
     if(user && user.authenticate(params[:user][:password]))
       token = set_token(user)
-    
-      render json: user,
-       serializer: AuthSerializer,
-       message: "Logged in Successfully.",
-       token: token,
-       status: :ok
+      render json: {user: UserSerializer.new(user), meta: {token: token, message: "Logged in successfully."} }, status: :ok
     else
       render json: {message: "Invalid email or password."}
     end
