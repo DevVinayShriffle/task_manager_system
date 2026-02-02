@@ -10,16 +10,19 @@ class ApplicationController < ActionController::Base
     header = request.headers['Authorization']&.split(' ')&.last
     if header.present?
       begin
-        @decoded = JsonWebToken.decode(header)
-        @current_user = User.find(@decoded[:user_id])
+        decoded_present(header)
+        @current_user = User.find(@decoded[:user_id]) if (@decoded.present?)
       rescue ActiveRecord::RecordNotFound => e
-        render json: {errors: e.message}, status: :unauthorized
-      rescue JWT::DecodeError => e
         render json: {errors: e.message}, status: :unauthorized
       end
     else
       render json: {message: "Missing token.", status: :unauthorized}, status: :unauthorized
     end
+  end
+
+  def decoded_present(header)
+    @decoded = JsonWebToken.decode(header)
+    render json: {message: "Token expired."},status: :unauthorized unless @decoded.present? 
   end
 
   def authorize_user
