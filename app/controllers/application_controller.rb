@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
   rescue_from ActionController::ParameterMissing, with: :parameter_missing
+  rescue_from ActionDispatch::Http::Parameters::ParseError, with: :parameter_missing
   rescue_from NoMethodError, with: :no_method_error
   rescue_from ArgumentError, with: :enum_argument_error
 
