@@ -1,0 +1,8 @@
+<h1>User Details</h1>
+<p>Name: <%= @user.name %></p>
+<p>Email: <%= @user.email %></p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %> |
+
+<%= link_to 'Delete User', user_path(@user), data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this user?' } %>

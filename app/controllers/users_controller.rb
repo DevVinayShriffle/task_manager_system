@@ -1,10 +1,24 @@
 class UsersController < ApplicationController
-  before_action :authorize_request, except: [:create, :login]
+  before_action :authorize_request, except: [:create, :login, :new]
+
+  def new
+    @user = User.new
+  end
+
+  # def create
+  #   user = User.create!(user_params)
+  #   token = set_token(user)
+  #   render json: {user: UserSerializer.new(user), meta: {token: token, message: "User registered successfully."}}, status: :ok
+  # end
 
   def create
-    user = User.create!(user_params)
-    token = set_token(user)
-    render json: {user: UserSerializer.new(user), meta: {token: token, message: "User registered successfully."}}, status: :ok
+    @user = User.create!(user_params)
+    token = set_token(@user)
+    respond_to do |format|
+      format.html {redirect_to login_users_path, notice: "User registered successfully."}
+      format.json {render json: {user: UserSerializer.new(@user), meta: {token: token, message: "User registered successfully."}}, status: :ok}
+    end
+    # render json: {user: UserSerializer.new(user), meta: {token: token, message: "User registered successfully."}}, status: :ok
   end
 
   def update
@@ -23,6 +37,10 @@ class UsersController < ApplicationController
   end
 
   def login
+
+  end
+
+  def login_user
     user = User.find_by(email: params[:user][:email].strip.downcase)
    
     if(user && user.authenticate(params[:user][:password]))
