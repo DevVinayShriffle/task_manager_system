@@ -1,0 +1,22 @@
+<h1>Update Task</h1>
+<%# update task %>
+<%= form_with model: @task do |form|
+  <div>
+    <%= form.label :title %>
+    <%= form.text_field :title, placeholder: "Enter title" %>
+  </div>
+
+  <div>
+    <%= form.label :descryption %>
+    <%= form.text_field :descryption, placeholder: "Enter descryption" %>
+  </div>
+
+  <div>
+    <%= f.label :status %>
+    <%= f.select :status, ['pending', 'progress', 'completed'], prompt: "Select a status" %>
+  </div>
+
+  <div>
+    <%= form.submit "submit" %>
+  </div>
+<% end %>

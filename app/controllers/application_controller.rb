@@ -43,11 +43,21 @@ class ApplicationController < ActionController::Base
   end
 
   def record_invalid(error)
-    render json: {
-      status: 422,
+    # Rails.logger.error "Validation error: #{error.record.errors.full_messages.join(', ')}"
+
+    # flash.now[:error] = "There were problems with your submission: #{error.record.errors.full_messages.join(', ')}"
+    respond_to do |format|
+      format.html {render "new", status: :unprocessable_entity}
+      format.json {render json: {
       error: "Validation Failed",
       message: error.record.errors.full_messages
-    }, status: :unprocessable_entity
+    }, status: :unprocessable_entity}
+    end
+    # render json: {
+    #   status: 422,
+    #   error: "Validation Failed",
+    #   message: error.record.errors.full_messages
+    # }, status: :unprocessable_entity
   end
 
   def parameter_missing(error)
