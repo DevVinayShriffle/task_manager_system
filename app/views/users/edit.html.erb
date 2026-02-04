@@ -1,0 +1,13 @@
+<h2>Update Password</h2>
+
+<%= form_with scope: :user, url: users_path, method: :patch do |f| %>
+
+  New Password:
+  <%= f.password_field :password %><br><br>
+
+  <%= f.submit "Update" %>
+<% end %>
+
+<br>
+
+<%= button_to "Delete Account", users_path, method: :delete %>

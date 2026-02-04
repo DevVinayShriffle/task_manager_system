@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   # rescue_from StandardError, with: :internal_server_error
 
   def authorize_request
-    header = request.headers['Authorization']&.split(' ')&.last
+    header = request.headers['Authorization']&.split(' ')&.last || session[:token]&.split(' ')&.last
     if header.present?
       begin
         decoded_present(header)

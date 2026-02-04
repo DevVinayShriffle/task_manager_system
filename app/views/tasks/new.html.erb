@@ -1,0 +1,16 @@
+<h2>Create Task</h2>
+
+<%= form_with model: [:users, Task.new] do |f| %>
+
+Title:
+<%= f.text_field :title %><br><br>
+
+Description:
+<%= f.text_area :descryption %><br><br>
+
+Status:
+<%= f.select :status, Task.statuses.keys %><br><br>
+
+<%= f.submit "Create" %>
+
+<% end %>

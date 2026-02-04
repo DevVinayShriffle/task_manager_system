@@ -1,0 +1,27 @@
+<h2>All Tasks</h2>
+
+<p>
+<%= link_to "Create Task", new_users_task_path %> |
+<%= link_to "Update Password", edit_users_path %> |
+<%= button_to "Delete Account", users_path, method: :delete %>
+</p>
+
+<table border="1">
+<tr>
+<th>Title</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+
+<% @tasks.each do |task| %>
+<tr>
+<td><%= task.title %></td>
+<td><%= task.status %></td>
+<td>
+<%= link_to "Show", users_task_path(task) %>
+<%= link_to "Edit", edit_users_task_path(task) %>
+<%= button_to "Delete", users_task_path(task), method: :delete %>
+</td>
+</tr>
+<% end %>
+</table>

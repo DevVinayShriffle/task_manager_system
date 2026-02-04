@@ -16,7 +16,7 @@ class Task < ApplicationRecord
 
   def normalize_descryption
     if (descryption)
-      self.descryption = descryption.strip
+      self.descryption = descryption.strip #if descryption.present?
     end
   end
 end

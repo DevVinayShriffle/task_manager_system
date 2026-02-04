@@ -1,0 +1,16 @@
+<h2>Edit Task</h2>
+
+<%= form_with model: [:users, @task], scope: :task, method: :patch do |f| %>
+
+Title:
+<%= f.text_field :title %><br><br>
+
+Description:
+<%= f.text_area :descryption %><br><br>
+
+Status:
+<%= f.select :status, Task.statuses.keys, selected: @task.status %><br><br>
+
+<%= f.submit "Update" %>
+
+<% end %>
