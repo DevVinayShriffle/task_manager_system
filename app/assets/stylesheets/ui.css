@@ -260,3 +260,33 @@ input, textarea, select {
   border-radius: 8px;
   display: block;
 }
+
+/* ===== ERROR MESSAGE ===== */
+
+.error-message {
+  color: #e53e3e;
+  font-size: 13px;
+  display: block;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+/* ===== PASSWORD NOTE ===== */
+
+.password-note {
+  font-size: 12px;
+  color: #777;
+  margin-top: -8px;
+  margin-bottom: 15px;
+}
+
+.field-error {
+  color: red;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.input-error {
+  border: 1px solid red !important;
+}
+

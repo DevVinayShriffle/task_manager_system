@@ -2,15 +2,25 @@
 
 <h3>Login</h3>
 
-<%= form_with scope: :user, url: login_users_path do |f| %>
+<%= form_with scope: :user,
+              url: login_users_path,
+              html: { id: "loginForm", novalidate: true } do |f| %>
 
-<label>Email</label>
-<%= f.text_field :email %>
+  <label>Email</label>
+  <%= f.text_field :email,
+        placeholder: "dev@gmail.com",
+        id: "loginEmail" %>
+  <small class="error-message" id="loginEmailError"></small>
 
-<label>Password</label>
-<%= f.password_field :password %>
 
-<%= f.submit "Login", class: "btn btn-primary" %>
+  <label>Password</label>
+  <%= f.password_field :password,
+        placeholder: "Dev@12",
+        id: "loginPassword" %>
+  <small class="error-message" id="loginPasswordError"></small>
+
+
+  <%= f.submit "Login", class: "btn btn-primary" %>
 
 <% end %>
 
