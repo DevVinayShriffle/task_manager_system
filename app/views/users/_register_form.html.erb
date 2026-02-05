@@ -2,19 +2,19 @@
 
 <%= form_with scope: :user, url: users_path do |f| %>
 
-    Email:
-    <%= f.text_field :email %><br><br>
+Email:
+<%= f.text_field :email %><br><br>
 
-    Password:
-    <%= f.password_field :password %><br><br>
+Password:
+<%= f.password_field :password %><br><br>
 
-    <%= f.submit "Register" %>
+<%= f.submit "Register" %>
 
 <% end %>
 
 <hr>
 
 <p>
-Already have account?
-<%= link_to "Login here", root_path(form: "login") %>
+  Already have account?
+  <%= link_to "Login here", root_path(form: "login") %>
 </p>

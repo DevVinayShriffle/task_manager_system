@@ -6,7 +6,8 @@ class User < ApplicationRecord
             uniqueness: true,
             format: {
               with: URI::MailTo::EMAIL_REGEXP,
-              message: "must be a valid email address"
+              message: "must be a valid email address",
+              error: "must be a valid email address"
             }
   
   validates :password,

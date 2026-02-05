@@ -43,11 +43,17 @@ class ApplicationController < ActionController::Base
   end
 
   def record_invalid(error)
-    render json: {
-      status: 422,
-      error: "Validation Failed",
-      message: error.record.errors.full_messages
-    }, status: :unprocessable_entity
+    flash[:error] = "Validation failed"
+    # Redirects to the previous page
+    redirect_to request.referrer
+
+    # render partial: 'exception/exception', status: :unprocessable_entity
+    # render partial: "exception/exception"
+    # render json: {
+    #   status: 422,
+    #   error: "Validation Failed",
+    #   message: error.record.errors.full_messages
+    # }, status: :unprocessable_entity
   end
 
   def parameter_missing(error)
