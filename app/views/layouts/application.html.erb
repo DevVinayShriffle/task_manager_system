@@ -20,15 +20,21 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+
+    <%= stylesheet_link_tag "ui" %>
+    <%= javascript_include_tag "ui", defer: true %>
+
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <% if flash[:notice].present? %>
-      <div class="alert alert-info">
-        <%= flash[:notice] %>
+
+    <% if flash[:notice] %>
+      <div id="toast" class="toast">
+        <p><%= flash[:notice] %></p>
       </div>
     <% end %>
+
     <%= yield %>
   </body>
 </html>

@@ -1,19 +1,24 @@
-<h2>Create Task</h2>
+<%= render "shared/navbar" %>
 
-<%= form_with model: [:users, Task.new] do |f| %>
+<div class="center-wrapper">
+  <div class="form-card">
 
-Title:
-<%= f.text_field :title, required:true, placeholder: "Enter title" %><br><br>
-<% if flash[:error].present? %>
-  <p>
-    <%= flash[:error].split(':')[1] %>
-  </p>
-<% end %>
-Description:
-<%= f.text_area :descryption, placeholder: "Enter descryption..." %><br><br>
+    <h3>Create Task</h3>
 
-Status:
-<%= f.select :status, Task.statuses.keys %><br><br>
+    <%= form_with model: [:users, @task || Task.new] do |f| %>
 
-<%= f.submit "Create" %>
-<% end %>
+      <label>Title</label>
+      <%= f.text_field :title, required: true %>
+
+      <label>Description</label>
+      <%= f.text_area :descryption %>
+
+      <label>Status</label>
+      <%= f.select :status, Task.statuses.keys %>
+
+      <%= f.submit "Create Task", class: "btn btn-success" %>
+
+    <% end %>
+
+  </div>
+</div>

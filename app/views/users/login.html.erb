@@ -1,5 +1,14 @@
-<% if params[:form] == "login" %>
-  <%= render "login_form" %>
-<% else %>
-  <%= render "register_form" %>
-<% end %>
+<div class="center-wrapper">
+
+  <div>
+    <div class="main-heading">Task Manager</div>
+
+    <% if params[:form] == "login" %>
+      <%= render "login_form" %>
+    <% else %>
+      <%= render "register_form" %>
+    <% end %>
+
+  </div>
+
+</div>

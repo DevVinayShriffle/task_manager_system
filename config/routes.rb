@@ -6,5 +6,4 @@ Rails.application.routes.draw do
     delete :logout, on: :collection
     resources :tasks
   end
-
 end

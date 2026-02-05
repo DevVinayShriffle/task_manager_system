@@ -1,0 +1,262 @@
+/* ===== GLOBAL ===== */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f6fb;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* ===== CENTER CARD ===== */
+
+.center-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-card, .form-card, .task-card {
+  background: white;
+  padding: 35px;
+  border-radius: 14px;
+  width: 360px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* ===== HEADINGS ===== */
+
+.main-heading {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* ===== INPUT ===== */
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* ===== BUTTONS ===== */
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: #5b6cf0;
+  color: white;
+}
+
+.btn-danger {
+  background: #ff5c5c;
+  color: white;
+}
+
+.btn-success {
+  background: #28c76f;
+  color: white;
+}
+
+/* ===== NAVBAR ===== */
+
+.navbar {
+  background: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.hamburger {
+  cursor: pointer;
+  font-size: 22px;
+}
+
+/* ===== DROPDOWN ===== */
+
+.dropdown {
+  position: absolute;
+  right: 30px;
+  top: 65px;
+  background: white;
+  width: 180px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  display: none;
+}
+
+.dropdown a, .dropdown form {
+  display: block;
+  padding: 12px;
+  color: #333;
+}
+
+.dropdown a:hover, .dropdown form:hover {
+  background: #f3f3f3;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 12px 15px;
+  color: #333;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: #f4f6fb;
+}
+
+.dropdown-item.danger {
+  color: #e53e3e;
+}
+
+.dropdown.show {
+  display: block;
+}
+
+/* ===== TASK LIST ===== */
+
+/* ===== TASK PAGE WRAPPER ===== */
+
+.tasks-wrapper {
+  width: 90%;
+  max-width: 900px;
+  margin: 30px auto;
+}
+
+/* ===== HEADER ===== */
+
+.tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tasks-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* ===== TASK LIST CONTAINER ===== */
+
+.tasks-container {
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+
+/* ===== TASK ROW ===== */
+
+.task-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s ease;
+}
+
+.task-row:hover {
+  background: #f7f9ff;
+}
+
+.task-row:last-child {
+  border-bottom: none;
+}
+
+/* ===== TASK INFO ===== */
+
+.task-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+}
+
+.task-status {
+  font-size: 13px;
+  margin-top: 4px;
+  color: #666;
+}
+
+/* Optional status colors */
+.task-status.completed { color: #28c76f; }
+.task-status.pending { color: #f59e0b; }
+.task-status.cancelled { color: #ef4444; }
+
+/* ===== ACTIONS ===== */
+
+.task-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.inline-form {
+  display: inline;
+}
+
+/* ===== SMALL ACTION LINKS ===== */
+
+.action-link {
+  background: none;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.action-link.primary { color: #5b6cf0; }
+.action-link.success { color: #28c76f; }
+.action-link.danger  { color: #ef4444; }
+
+.action-link:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+/* ===== SMALL BUTTON ===== */
+
+.small-btn {
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
+
+/* ===== SUCCESS TOAST ===== */
+
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 45%;
+  background: #28c76f;
+  color: white;
+  padding: 0px 25px;
+  border-radius: 8px;
+  display: block;
+}

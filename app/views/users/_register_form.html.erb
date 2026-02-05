@@ -1,43 +1,22 @@
-<h3>Register</h3>
+<div class="auth-card">
+
+<h3>Sign Up</h3>
 
 <%= form_with scope: :user, url: users_path do |f| %>
 
-Email:
-<%= f.text_field :email, placeholder: "example@gmail.com", required: true %>
-<% if flash[:error].present? %>
-  <div class="alert alert-danger">
-    <% errors = flash[:error].split(',') %>
-    <% errors.map do |error| %>
-        <% if error.include?('email') %>
-          <%= error.split(': ')[1] %>
-        <% end %>
-    <% end %>
-  </div>
-<% end %>
-<br><br>
+<label>Email</label>
+<%= f.text_field :email %>
 
-Password:
-<%= f.password_field :password, placeholder: "Dev@123", required: true %>
-<% if flash[:error].present? %>
-  <div class="alert alert-danger">
-    <p>Please enter a valid password.</p>
-  </div>
-<% end %>
-<div>
-  <ul>
-    <li>Password must include 1 uppercase, 1 lowercase, 1 special character, 1 number</li>
-    <li>Password has length between 6 to 8 characters</li>
-    <li>Password does not contain any spaces</li>
-  </ul>
-</div>
-<br>
+<label>Password</label>
+<%= f.password_field :password %>
 
-<%= f.submit "Register" %>
-<% end %>
+<%= f.submit "Register", class: "btn btn-success" %>
 
-<hr>
+<% end %>
 
 <p>
-  Already have account?
-  <%= link_to "Login here", root_path(form: "login") %>
+Already registered?
+<%= link_to "Login", root_path(form: "login") %>
 </p>
+
+</div>
