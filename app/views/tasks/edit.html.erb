@@ -3,8 +3,12 @@
 <%= form_with model: [:users, @task], scope: :task, method: :patch do |f| %>
 
 Title:
-<%= f.text_field :title %><br><br>
-
+<%= f.text_field :title, required: true %><br><br>
+<% if flash[:error].present? %>
+  <p>
+    <%= flash[:error].split(':')[1] %>
+  </p>
+<% end %>
 Description:
 <%= f.text_area :descryption %><br><br>
 

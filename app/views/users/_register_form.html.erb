@@ -3,13 +3,36 @@
 <%= form_with scope: :user, url: users_path do |f| %>
 
 Email:
-<%= f.text_field :email %><br><br>
+<%= f.text_field :email, placeholder: "example@gmail.com", required: true %>
+<% if flash[:error].present? %>
+  <div class="alert alert-danger">
+    <% errors = flash[:error].split(',') %>
+    <% errors.map do |error| %>
+        <% if error.include?('email') %>
+          <%= error.split(': ')[1] %>
+        <% end %>
+    <% end %>
+  </div>
+<% end %>
+<br><br>
 
 Password:
-<%= f.password_field :password %><br><br>
+<%= f.password_field :password, placeholder: "Dev@123", required: true %>
+<% if flash[:error].present? %>
+  <div class="alert alert-danger">
+    <p>Please enter a valid password.</p>
+  </div>
+<% end %>
+<div>
+  <ul>
+    <li>Password must include 1 uppercase, 1 lowercase, 1 special character, 1 number</li>
+    <li>Password has length between 6 to 8 characters</li>
+    <li>Password does not contain any spaces</li>
+  </ul>
+</div>
+<br>
 
 <%= f.submit "Register" %>
-
 <% end %>
 
 <hr>

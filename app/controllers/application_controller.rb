@@ -43,7 +43,8 @@ class ApplicationController < ActionController::Base
   end
 
   def record_invalid(error)
-    flash[:error] = "Validation failed"
+    flash[:error] = error
+    # flash[:notice] = error
     # Redirects to the previous page
     redirect_to request.referrer
 

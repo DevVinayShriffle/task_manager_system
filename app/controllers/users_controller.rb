@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     if @current_user.destroy
       # render json: {message: "User deleted Successfully."}, status: :ok
       respond_to do |format|
-        format.html { redirect_to root_path, notice: "User deleted." }
+        format.html { redirect_to root_path, notice: "User deleted Successfully." }
         format.json { render json: {message: "User deleted Successfully."}, status: :ok }
       end
      # else
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
       # render json: {user: UserSerializer.new(user), meta: {token: token, message: "Logged in successfully."} }, status: :ok
       respond_to do |format|
         format.html { redirect_to users_tasks_path, notice: "Logged in successfully." }
-        format.json { render json: {user: UserSerializer.new(user), meta: {token: token}}, status: :ok }
+        format.json { render json: {user: UserSerializer.new(user), meta: { token: token, message: "Logged in successfully."}}, status: :ok }
       end
     else
       # render json: {message: "Invalid email or password."}
@@ -61,10 +61,20 @@ class UsersController < ApplicationController
       #   redirect_to login_users_path
       # end
       # flash[:alert] = "Invalid email or password."
+      flash[:error] = "Invalid email or password."
       respond_to do |format|
-        format.html { redirect_to root_path(form: "login"), notice: "Invalid email or password." }
+        format.html { redirect_to root_path(form: "login") }
         format.json { render json: {message: "Invalid email or password."} }
       end
+    end
+  end
+
+  def logout
+    session.delete(:token)
+    # session.delete(:user_id)
+    respond_to do |format|
+      format.html { redirect_to root_path(form: "login"), notice: "Logged out successfully." }
+      format.json { render json: { message: "Logged out successfully."}, status: :ok }
 
     end
   end

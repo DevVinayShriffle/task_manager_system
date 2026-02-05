@@ -3,10 +3,16 @@
 <%= form_with scope: :user, url: login_users_path do |f| %>
 
 Email:
-<%= f.text_field :email %><br><br>
+<%= f.text_field :email, placeholder: "dev@gmail.com",required: true %><br><br>
 
 Password:
-<%= f.password_field :password %><br><br>
+<%= f.password_field :password, placeholder: "Dev@123", required: true %>
+<% if flash[:error].present? %>
+  <div class="alert alert-danger">
+    <%= flash[:error].split(':')[0] %>
+  </div>
+<% end %>
+<br>
 
 <%= f.submit "Login" %>
 <% end %>

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root "users#login"
   resource :users, only: [:create, :update, :destroy, :edit] do
     post :login, on: :collection
+    delete :logout, on: :collection
     resources :tasks
   end
 

@@ -3,14 +3,17 @@
 <%= form_with model: [:users, Task.new] do |f| %>
 
 Title:
-<%= f.text_field :title %><br><br>
-
+<%= f.text_field :title, required:true, placeholder: "Enter title" %><br><br>
+<% if flash[:error].present? %>
+  <p>
+    <%= flash[:error].split(':')[1] %>
+  </p>
+<% end %>
 Description:
-<%= f.text_area :descryption %><br><br>
+<%= f.text_area :descryption, placeholder: "Enter descryption..." %><br><br>
 
 Status:
 <%= f.select :status, Task.statuses.keys %><br><br>
 
 <%= f.submit "Create" %>
-
 <% end %>

@@ -1,1 +1,7 @@
 <h1>I am from exception.html.erb</h1>
+
+<% if flash[:error].present? %>
+  <div class="alert alert-danger">
+    <%= flash[:error].split(':')[0] %>
+  </div>
+<% end %>

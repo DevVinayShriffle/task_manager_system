@@ -24,12 +24,6 @@
   </head>
 
   <body>
-    <% if flash[:error].present? %>
-      <div class="alert alert-danger">
-        <%= flash[:error] %>
-      </div>
-    <% end %>
-
     <% if flash[:notice].present? %>
       <div class="alert alert-info">
         <%= flash[:notice] %>
