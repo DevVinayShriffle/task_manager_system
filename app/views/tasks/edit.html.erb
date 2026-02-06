@@ -12,12 +12,12 @@
       
       <% if flash[:error] %>
         <div>
-          <p class="validation-failed" style="color:#e53e3e;font-size: 12px;"><%= flash[:error] %></p>
+          <p style="color:#e53e3e;font-size: 12px;"><%= flash[:error] %></p>
         </div>
       <% end %>
 
-      <label>Description</label>
-      <%= f.text_area :description, placeholder: "Enter description" %>
+      <label>Descryption</label>
+      <%= f.text_area :descryption, placeholder: "Enter descryption" %>
 
       <label>Status</label>
       <%= f.select :status, Task.statuses.keys, selected: @task.status %>

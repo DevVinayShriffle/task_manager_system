@@ -1,37 +1,37 @@
 <div class="auth-card">
 
-<h3>Login</h3>
+  <h3>Login</h3>
 
-<%= form_with scope: :user,
-              url: login_users_path,
-              html: { id: "loginForm", novalidate: true } do |f| %>
+  <%= form_with scope: :user,
+  url: login_users_path,
+  html: { id: "loginForm", novalidate: true } do |f| %>
 
   <label>Email</label>
   <%= f.text_field :email,
-        placeholder: "dev@gmail.com",
-        id: "loginEmail", autofocus:true %>
+  placeholder: "dev@gmail.com",
+  id: "loginEmail", autofocus:true %>
   <small class="error-message" id="loginEmailError"></small>
 
 
   <label>Password</label>
   <%= f.password_field :password,
-        placeholder: "Dev@12",
-        id: "loginPassword" %>
+  placeholder: "Dev@12",
+  id: "loginPassword" %>
   <small class="error-message" id="loginPasswordError"></small>
 
   <% if flash[:error] %>
-    <div class="validation-failed">
-      <p class="validation-failed" style="color:#e53e3e;font-size: 12px;"><%= flash[:error] %></p>
-    </div>
+  <div class="validation-failed">
+    <p class="validation-failed" style="color:#e53e3e;font-size: 12px;"><%= flash[:error] %></p>
+  </div>
   <% end %>
 
   <%= f.submit "Login", class: "btn btn-primary" %>
 
-<% end %>
+  <% end %>
 
-<p>
-New user?
-<%= link_to "Register", root_path %>
-</p>
+  <p>
+    New user?
+    <%= link_to "Register", root_path %>
+  </p>
 
 </div>

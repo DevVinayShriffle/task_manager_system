@@ -4,11 +4,6 @@ class TasksController < ApplicationController
 
   def index
     tasks = @current_user.tasks.order(created_at: :desc)
-    # if tasks.present?
-    #   render json: {tasks: tasks.map {|task| TaskSerializer.new(task)}, message: "All tasks"}, status: :ok
-    # else  
-    #   render json: {message: "There are no any tasks."}, status: :ok
-    # end
     respond_to do |format|
       format.html { @tasks = tasks }
       format.json do
@@ -22,7 +17,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    # render json: {task: TaskSerializer.new(@task), message: "Task get successfully"}, status: :ok
     respond_to do |format|
       format.html { @task = @task }
       format.json { render json: {task: TaskSerializer.new(@task)} }
@@ -31,7 +25,6 @@ class TasksController < ApplicationController
 
   def create
     task = @current_user.tasks.create!(task_params)
-    # render json: {task: TaskSerializer.new(task), message: "Task created successfully."}, status: :created
     respond_to do |format|
       format.html { redirect_to users_task_path(task), notice: "Task created." }
       format.json { render json: {task: TaskSerializer.new(task)}, status: :created }
@@ -40,8 +33,6 @@ class TasksController < ApplicationController
 
   def update
     if @task.update!(task_params)
-      # task = @current_user.tasks.find_by(id: params[:id])
-      # render json: {task: TaskSerializer.new(task), message: "Task updated successfully"}, status: :ok
       respond_to do |format|
         format.html { redirect_to users_task_path(@task), notice: "Task updated." }
         format.json { render json: {message: "Task updated"} }
@@ -51,9 +42,6 @@ class TasksController < ApplicationController
 
   def destroy
     if @task.destroy
-        # render json: {message: "Task deleted successfully."}, status: :ok
-      # else
-        # render json: {message: "Task not deleted."}, status: :unprocessable_entity
       respond_to do |format|
         format.html { redirect_to users_tasks_path, notice: "Task deleted." }
         format.json { render json: {message: "Task deleted"} }

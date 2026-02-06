@@ -44,8 +44,6 @@ class ApplicationController < ActionController::Base
 
   def record_invalid(error)
     flash[:error] = error
-    # flash[:notice] = error
-    # Redirects to the previous page
     redirect_to request.referrer
 
     # render partial: 'exception/exception', status: :unprocessable_entity

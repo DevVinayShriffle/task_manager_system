@@ -1,15 +1,15 @@
 <%= render "shared/navbar" %>
 
 <div class="center-wrapper">
-<div class="task-card">
+  <div class="task-card">
 
-<h3>Task Details</h3>
+    <h3>Task Details</h3>
 
-<p><b>Title:</b> <%= @task.title %></p>
-<p><b>Description:</b> <%= @task.descryption %></p>
-<p><b>Status:</b> <%= @task.status %></p>
+    <p><b>Title:</b> <%= @task.title %></p>
+    <p><b>Description:</b> <%= @task.descryption %></p>
+    <p><b>Status:</b> <%= @task.status %></p>
 
-<%= link_to "Back", users_tasks_path, class: "btn btn-primary" %>
+    <%= link_to "Back", users_tasks_path, class: "btn btn-primary" %>
 
-</div>
+  </div>
 </div>

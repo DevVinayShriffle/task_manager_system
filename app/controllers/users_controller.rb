@@ -4,10 +4,6 @@ class UsersController < ApplicationController
   def create
     user = User.create!(user_params)
     token = set_token(user)
-    # flash.now[:error] = "User Registered successfully. I am from flash error."
-    # flash[:notice] = "I am from flash notice from create users action."
-    
-    # render json: {user: UserSerializer.new(user), meta: {token: token, message: "User registered successfully."}}, status: :ok
     respond_to do |format|
       format.html { redirect_to users_tasks_path, notice: "User registered successfully." }
       format.json { render json: {user: UserSerializer.new(user), meta: {token: token}}, status: :ok }
@@ -19,8 +15,6 @@ class UsersController < ApplicationController
 
   def update
     if @current_user.update!(password: params[:user][:password])
-      # user = User.find_by(id: @current_user[:id])
-      # render json: {user: UserSerializer.new(user), message: "User updated successfully."}, status: :ok
       respond_to do |format|
         format.html { redirect_to users_tasks_path, notice: "Password updated." }
         format.json { render json: {message: "User updated successfully."}, status: :ok }
@@ -30,13 +24,10 @@ class UsersController < ApplicationController
 
   def destroy
     if @current_user.destroy
-      # render json: {message: "User deleted Successfully."}, status: :ok
       respond_to do |format|
         format.html { redirect_to root_path, notice: "User deleted Successfully." }
         format.json { render json: {message: "User deleted Successfully."}, status: :ok }
       end
-     # else
-      # render json: {message: "User not deleted."}, status: :unprocessable_entity
     end
   end
 
@@ -46,21 +37,11 @@ class UsersController < ApplicationController
    
     if(user && user.authenticate(params[:user][:password]))
       token = set_token(user)
-      # redirect_to users_tasks_path
-      # render json: {user: UserSerializer.new(user), meta: {token: token, message: "Logged in successfully."} }, status: :ok
       respond_to do |format|
         format.html { redirect_to users_tasks_path, notice: "Logged in successfully." }
         format.json { render json: {user: UserSerializer.new(user), meta: { token: token, message: "Logged in successfully."}}, status: :ok }
       end
     else
-      # render json: {message: "Invalid email or password."}
-      # respond_to do |format|
-      #   # format.html { render :login }
-      #   # format.json { render json: {message: "Invalid email or password."} }
-      #   flash[:alert] = "Invalid email or password"
-      #   redirect_to login_users_path
-      # end
-      # flash[:alert] = "Invalid email or password."
       flash[:error] = "Invalid email or password."
       respond_to do |format|
         format.html { redirect_to root_path(form: "login") }
@@ -71,7 +52,6 @@ class UsersController < ApplicationController
 
   def logout
     session.delete(:token)
-    # session.delete(:user_id)
     respond_to do |format|
       format.html { redirect_to root_path(form: "login"), notice: "Logged out successfully." }
       format.json { render json: { message: "Logged out successfully."}, status: :ok }

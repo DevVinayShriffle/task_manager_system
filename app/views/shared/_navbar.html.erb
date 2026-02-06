@@ -9,15 +9,14 @@
     <%= link_to "Update Password", edit_users_path, class: "dropdown-item" %>
 
     <%= link_to "Delete Account",
-          users_path,
-          data: { turbo_method: :delete, confirm: "Are you sure?" },
-          class: "dropdown-item danger delete-confirm" %>
+    users_path,
+    data: { turbo_method: :delete, confirm: "Are you sure?" },
+    class: "dropdown-item danger delete-confirm" %>
 
     <%= link_to "Logout",
-          logout_users_path,
-          data: { turbo_method: :delete },
-          class: "dropdown-item" %>
-
+    logout_users_path,
+    data: { turbo_method: :delete },
+    class: "dropdown-item" %>
   </div>
-
+  
 </div>
