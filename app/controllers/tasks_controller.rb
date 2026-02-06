@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    tasks = @current_user.tasks
+    tasks = @current_user.tasks.order(created_at: :desc)
     # if tasks.present?
     #   render json: {tasks: tasks.map {|task| TaskSerializer.new(task)}, message: "All tasks"}, status: :ok
     # else  
