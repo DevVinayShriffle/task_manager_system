@@ -9,7 +9,7 @@
   <label>Email</label>
   <%= f.text_field :email,
         placeholder: "dev@gmail.com",
-        id: "loginEmail" %>
+        id: "loginEmail", autofocus:true %>
   <small class="error-message" id="loginEmailError"></small>
 
 
@@ -19,6 +19,11 @@
         id: "loginPassword" %>
   <small class="error-message" id="loginPasswordError"></small>
 
+  <% if flash[:error] %>
+    <div class="validation-failed">
+      <p class="validation-failed" style="color:#e53e3e;font-size: 12px;"><%= flash[:error] %></p>
+    </div>
+  <% end %>
 
   <%= f.submit "Login", class: "btn btn-primary" %>
 

@@ -8,8 +8,13 @@
     <%= form_with model: [:users, @task], method: :patch, html: { id: "editTaskForm" } do |f| %>
 
       <label>Title</label>
-      <%= f.text_field :title, placeholder: "Enter title", id: "editTitleField" %>
-      <p id="editTitleError" class="field-error"></p>
+      <%= f.text_field :title, placeholder: "Enter title", id: "editTitleField", autofocus:true %>
+      
+      <% if flash[:error] %>
+        <div>
+          <p class="validation-failed" style="color:#e53e3e;font-size: 12px;"><%= flash[:error] %></p>
+        </div>
+      <% end %>
 
       <label>Description</label>
       <%= f.text_area :description, placeholder: "Enter description" %>
