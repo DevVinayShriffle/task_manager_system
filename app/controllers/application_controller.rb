@@ -44,7 +44,18 @@ class ApplicationController < ActionController::Base
 
   def record_invalid(error)
     flash[:error] = error
-    redirect_to request.referrer
+    
+    respond_to do |format|
+      format.html do
+        redirect_to request.referrer,
+        error: error
+      end
+
+      format.json do
+        render json: { errors: error.record.errors.full_messages }, status: :unprocessable_entity
+      end
+    end
+    # redirect_to request.referrer
 
     # render json: {
     #   status: 422,
