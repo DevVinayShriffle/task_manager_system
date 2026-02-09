@@ -69,4 +69,5 @@ group :test do
   gem "selenium-webdriver"
   gem 'shoulda-matchers'
   gem 'shoulda-callback-matchers'
+  gem 'rails-controller-testing'
 end

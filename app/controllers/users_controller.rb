@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     token = set_token(user)
     respond_to do |format|
       format.html { redirect_to users_tasks_path, notice: "User registered successfully." }
-      format.json { render json: {user: UserSerializer.new(user), meta: {token: token}}, status: :ok }
+      format.json { render json: {user: UserSerializer.new(user), meta: {token: token, message: "User registered successfully."}}, status: :ok }
     end
   end
 
@@ -18,12 +18,14 @@ class UsersController < ApplicationController
       respond_to do |format|
         format.html { redirect_to users_tasks_path, notice: "Password updated." }
         format.json { render json: {message: "User updated successfully."}, status: :ok }
+        # format.json { render json: {user: UserSerializer.new(@current_user), meta: {message: "User registered successfully."}}, status: :ok }
       end
     end
   end
 
   def destroy
     if @current_user.destroy
+      session.delete(:token)
       respond_to do |format|
         format.html { redirect_to root_path, notice: "User deleted Successfully." }
         format.json { render json: {message: "User deleted Successfully."}, status: :ok }
@@ -45,7 +47,7 @@ class UsersController < ApplicationController
       flash[:error] = "Invalid email or password."
       respond_to do |format|
         format.html { redirect_to root_path(form: "login") }
-        format.json { render json: {message: "Invalid email or password."} }
+        format.json { render json: {message: "Invalid email or password."}, status: :unauthorized }
       end
     end
   end

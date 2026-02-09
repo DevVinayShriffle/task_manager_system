@@ -46,8 +46,6 @@ class ApplicationController < ActionController::Base
     flash[:error] = error
     redirect_to request.referrer
 
-    # render partial: 'exception/exception', status: :unprocessable_entity
-    # render partial: "exception/exception"
     # render json: {
     #   status: 422,
     #   error: "Validation Failed",

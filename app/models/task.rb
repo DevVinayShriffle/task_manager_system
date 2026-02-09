@@ -11,7 +11,7 @@ class Task < ApplicationRecord
   private
 
   def normalize_title
-    self.title = title.strip
+    self.title = title.strip if title.present?
   end
 
   def normalize_descryption
