@@ -8,9 +8,9 @@ class TasksController < ApplicationController
       format.html { @tasks = tasks }
       format.json do
         if tasks.present?
-          render json: {tasks: tasks.map {|t| TaskSerializer.new(t)}}
+          render json: {tasks: tasks.map {|t| TaskSerializer.new(t)}}, status: :ok
         else
-          render json: {message: "No tasks"}
+          render json: {message: "No tasks"}, status: :ok
         end
       end
     end
@@ -18,8 +18,8 @@ class TasksController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html { @task = @task }
-      format.json { render json: {task: TaskSerializer.new(@task)} }
+      format.html { @task }
+      format.json { render json: {task: TaskSerializer.new(@task), message: "Task get successfully."}, status: :ok }
     end
   end
 
@@ -35,7 +35,7 @@ class TasksController < ApplicationController
     if @task.update!(task_params)
       respond_to do |format|
         format.html { redirect_to users_task_path(@task), notice: "Task updated." }
-        format.json { render json: {message: "Task updated"} }
+        format.json { render json: {task: TaskSerializer.new(@task), message: "Task updated successfully."}, status: :ok }
       end
     end
   end
@@ -44,7 +44,7 @@ class TasksController < ApplicationController
     if @task.destroy
       respond_to do |format|
         format.html { redirect_to users_tasks_path, notice: "Task deleted." }
-        format.json { render json: {message: "Task deleted"} }
+        format.json { render json: {message: "Task deleted"}, status: :ok }
       end
     end
   end

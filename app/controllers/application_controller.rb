@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  skip_before_action :verify_authenticity_token ,if: :json_request?
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
@@ -98,5 +99,9 @@ class ApplicationController < ActionController::Base
     else
       raise error
     end
+  end
+
+  def json_request?
+    request.format.json?
   end
 end
