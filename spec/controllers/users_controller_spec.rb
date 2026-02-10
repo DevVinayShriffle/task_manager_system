@@ -134,7 +134,7 @@ RSpec.describe UsersController, type: :controller do
   #   end
   # end
 
-  let(:user) {create(:user)}
+  let!(:user) {create(:user)}
   let(:token) { "Bearer #{JsonWebToken.encode(user_id: user.id)}" }
 
   before do
@@ -206,10 +206,23 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context "invalid password" do
-      it "fails update" do
-        patch :update, params: { user: { password: "abc" } }
+      context "when referrer exists" do
+        before do
+          request.env["HTTP_REFERER"] = users_path
+        end
 
-        expect(flash[:error]).to be_present
+        it "fails update (HTML)" do
+          patch :update, params: {user: { password: "wrongpassword" } }, format: :html
+
+          expect(response).to redirect_to(users_path)
+          expect(flash[:error]).to be_present
+        end
+
+        it "fails update (JSON)" do
+          patch :update, params: {user: { password: "wrongpassword" } }, format: :json
+
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
       end
     end
   end
@@ -218,10 +231,11 @@ RSpec.describe UsersController, type: :controller do
 
     it "destroys user (HTML)" do
       expect {
-        delete :destroy
+        delete :destroy, format: :html
       }.to change(User, :count).by(-1)
 
       expect(response).to redirect_to(root_path)
+      expect(flash[:notice]).to eq("User deleted Successfully.")
     end
 
     it "destroys user (JSON)" do

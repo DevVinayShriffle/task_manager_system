@@ -27,7 +27,7 @@ class TasksController < ApplicationController
     task = @current_user.tasks.create!(task_params)
     respond_to do |format|
       format.html { redirect_to users_task_path(task), notice: "Task created." }
-      format.json { render json: {task: TaskSerializer.new(task)}, status: :created }
+      format.json { render json: {task: TaskSerializer.new(task), message: "Task created." }, status: :created }
     end
   end
 
