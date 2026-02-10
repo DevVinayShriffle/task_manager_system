@@ -44,7 +44,7 @@ class TasksController < ApplicationController
     if @task.destroy
       respond_to do |format|
         format.html { redirect_to users_tasks_path, notice: "Task deleted." }
-        format.json { render json: {message: "Task deleted"}, status: :ok }
+        format.json { render json: {message: "Task deleted."}, status: :ok }
       end
     end
   end
