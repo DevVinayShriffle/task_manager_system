@@ -90,9 +90,10 @@ Rails.application.configure do
     address:              'smtp.gmail.com',
     port:                 587,
     domain:               'gmail.com',
-    user_name:            'vinayks@shriffle.com',
-    password:             'luxt uobp lfxe skap',
-    authentication:       'plain'
+    user_name:            ENV['EMAIL'],
+    password:             ENV['EMAIL_PASSWORD'],
+    authentication:       'plain',
+    enable_starttls_auto: true
   }
 
   # config.action_mailer.default_url_options = { :host => 'http://localhost:3000' }
