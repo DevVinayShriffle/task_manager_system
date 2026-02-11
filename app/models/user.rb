@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
 
   before_validation :normalize_email, :normalize_password
+  after_create :send_welcome_email
 
   private
 
@@ -28,5 +29,9 @@ class User < ApplicationRecord
 
   def normalize_password
     self.password = password.strip if password.present?
+  end
+
+  def send_welcome_email
+    SendEmailsJob.set(wait: 2.minute).perform_later(self)
   end
 end

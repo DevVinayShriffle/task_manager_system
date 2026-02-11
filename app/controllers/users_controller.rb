@@ -1,12 +1,9 @@
-
 class UsersController < ApplicationController
   before_action :authorize_request, except: [ :create, :login ]
 
   def create
     user = User.create!(user_params)
     token = set_token(user)
-    # byebug
-    UserMailer.welcome_email(user).deliver_now
     respond_to do |format|
       format.html { redirect_to users_tasks_path, notice: "User registered successfully." }
       format.json { render json: { user: UserSerializer.new(user), meta: { token: token, message: "User registered successfully." } }, status: :ok }
