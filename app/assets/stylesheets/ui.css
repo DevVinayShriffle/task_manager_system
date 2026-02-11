@@ -291,17 +291,4 @@ input, textarea, select {
   border: 1px solid red !important;
 }
 
-/* ===== Mailer template ===== */
-.email-main {
-  height: 100%;
-  width: 100%;
-  padding: 10%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.email-body {
-  
-}
+/* ===== Validation-failed ===== */

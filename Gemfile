@@ -72,4 +72,5 @@ group :test do
   gem 'shoulda-callback-matchers'
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
+  gem 'simplecov', require: false
 end

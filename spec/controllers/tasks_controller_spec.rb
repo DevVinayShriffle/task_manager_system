@@ -2,20 +2,14 @@ require 'rails_helper'
 
 RSpec.describe TasksController, type: :controller do
   let(:user) {create(:user)}
-  # let!(:token) { "Bearer #{JsonWebToken.encode(user_id: user.id)}" }
-  # # let(:decoded) { JsonWebToken.decode(token.split.last) }
-  # let(:current_user) { User.find(decoded[:user_id]) }
-
+ 
   it { should use_before_action(:authorize_request) }
   it { should use_before_action(:set_task) }
-  # let(:task) {create(:task)}
+
   let!(:task) {create(:task, user: user)}
   
   before do
-    # @token = "Bearer #{JsonWebToken.encode(user_id: user.id)}"
-    # response.headers["Authorization"] = "Bearer #{JsonWebToken.encode(user_id: user.id)}"
-    # headers = { "Authorization" => "Bearer #{JsonWebToken.encode(user_id: user.id)}" }
-    session[:token] = "Bearer #{JsonWebToken.encode(user_id: user.id)}"
+    request.headers["Authorization"] = "Bearer #{JsonWebToken.encode(user_id: user.id)}"
   end
 
   describe 'GET#index' do
@@ -51,28 +45,12 @@ RSpec.describe TasksController, type: :controller do
         expect(json["message"]).to eq("No tasks")
       end
     end
-
-    # it 'index task (JSON)' do
-    #   get :index, format: :json
-    #   json = JSON.parse(response.body)
-
-    #   expect(response).to have_http_status(:ok)
-
-    #   context 'have many tasks' do
-    #     expect(json["tasks"]).to be_present
-    #   end
-
-    #   context 'have no tasks' do
-    #     expect(json["message"]).to eq("No tasks")
-    #   end
-    # end
   end
 
   describe 'GET#show' do
     it 'show task (HTML)' do
       get :show, params: {id: task.id}, format: :html
       expect(response).to have_http_status(:ok)
-      # expect(assigns(:task)).to eq(task)
     end
 
     it 'show task (JSON)' do
@@ -92,7 +70,6 @@ RSpec.describe TasksController, type: :controller do
 
       it 'creates task (HTML)' do
         post :create, params: {task: valid_params}, format: :html
-        # byebug
         created_task = Task.last
         expect(response).to redirect_to(users_task_path(created_task))
         expect(flash[:notice]).to eq("Task created.")

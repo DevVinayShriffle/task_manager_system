@@ -6,14 +6,15 @@
 <p>Thanks for joining and have a great day!</p>
  %> 
 
- <div class="email-main">
+ <div style="height: 100%; width: 100%; padding: 10%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
    <div>
      <h1>Welcome user to Task manager System app!</h>
    </div>
+   <div style="width: 100%;">
+      <h2 style="font-size: 12px;">Hi there,</h2>
+   </div>
 
-   <h2>Hi there,</h2>
-
-   <div class="email-body">  
+   <div style="padding: 0px 15%;">  
      <p>
       You have successfully created your account,
       your email is: <%= @user.email %> 
@@ -24,5 +25,19 @@
       <br><br>
       Thanks for joining and have a great day!
      </p>
+   </div>
+
+   <div style="width: 100%;">
+    <p>
+      Warm Regards 
+     <br>
+     Task Manager Team
+     <br>
+     support_task@gmail.com
+    </p>
+   </div>
+
+   <div style="width: 100%; display: flex; justify-content: start;">
+      <p style="font-weight: 800;">All rights reserved to @task_manager_system</p>
    </div>
  </div>
