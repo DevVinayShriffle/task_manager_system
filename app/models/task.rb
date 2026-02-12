@@ -8,6 +8,8 @@ class Task < ApplicationRecord
 
   before_validation :normalize_title, :normalize_descryption
 
+  broadcasts_to ->(task) { "tasks" }, inserts_by: :prepend
+
   private
 
   def normalize_title
