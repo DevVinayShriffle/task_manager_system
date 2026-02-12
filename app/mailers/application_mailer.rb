@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "vinayks@shriffle.com"
+  default from: Rails.application.credentials.secret_email
   layout "mailer"
 end
