@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    tasks = @current_user.tasks.order(created_at: :desc)
+    tasks = @current_user.tasks.order(created_at: :desc).page(params[:page]).per(5)
     respond_to do |format|
       format.html { @tasks = tasks }
       format.json do

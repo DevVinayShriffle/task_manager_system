@@ -41,5 +41,8 @@
       </div>
     <% end %>
 
+    <%# This will generate the links (Prev, 1, 2, 3... Next) %>
+    <%= paginate @tasks, remote: true %>
+
   </div>
 </div>
