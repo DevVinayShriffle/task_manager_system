@@ -9,7 +9,7 @@
   <%# <div id="new_task_form">
     <%= render "new_form", user: @user, task: @user.tasks.new %>
   <%# </div> %> 
-  <div style="width: 40%; margin: auto;">
+  <div>
     <%= turbo_frame_tag "form" do %>
       <%= render "tasks/form", task: Task.new %>
     <% end %>

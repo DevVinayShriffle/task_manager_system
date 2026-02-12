@@ -1,2 +1,2 @@
 <%= turbo_stream.prepend "tasks", @task %>
-<%= turbo_stream.replace "taskForm", partial: "tasks/form", locals: { task: Task.new } %>
+<%= turbo_stream.replace "task_outer_form", partial: "tasks/form", locals: { task: Task.new } %>
