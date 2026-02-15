@@ -1,21 +1,26 @@
 <%= render "shared/navbar" %>
 
 <div class="center-wrapper">
-  <div class="form-card">
-
+  <div class="form-card" style="margin-top: 100px;">
+    <div style="display: flex; justify-content: space-between; align-items:center; margin-bottom: 10px;">
     <h3>Update Password</h3>
+    <%= link_to "Back", users_tasks_path %>
+    </div>
 
     <%= form_with scope: :user,
     url: users_path,
     method: :patch,
-    html: { id: "updatePasswordForm", novalidate: true } do |f| %>
+    data: {
+    controller: "password",
+    action: "submit->password#validate"},
+    novalidate: true do |f| %>
 
     <label>New Password</label>
     <%= f.password_field :password,
     placeholder: "Dev@12",
-    id: "updatePasswordField", autofocus:true %>
+    data: { password_target: "password" }, autofocus:true %>
 
-    <small class="error-message" id="updatePasswordError"></small>
+    <small class="error-message" data-password-target="error"></small>
 
     <p class="password-note">
       Must include 1 uppercase, 1 lowercase, 1 special character,

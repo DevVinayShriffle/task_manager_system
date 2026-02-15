@@ -2,11 +2,14 @@
   <div class="form-card" style="margin: auto;">
   
 
-    <%= form_with model: [:users, task || Task.new], data: { turbo_stream: true }, html: { id: "taskForm" } do |f| %>
+    <%= form_with model: [:users, task || Task.new], data: { turbo_stream: true,
+    controller: "task-form",
+      action: "submit->task-form#validate" }, html: { id: "taskForm" } do |f| %>
 
     <label>Title</label>
-    <%= f.text_field :title, placeholder: "Enter title", autofocus: true, id: "titleField" %>
-    <p id="titleError" class="field-error"></p>
+    <%= f.text_field :title, placeholder: "Enter title", autofocus: true, data: { task_form_target: "title" } %>
+    <p class="field-error"
+   data-task-form-target="error"></p>
 
     <label>Descryption</label>
     <%= f.text_area :descryption, placeholder: "Enter descryption" %>
@@ -14,11 +17,14 @@
     <label>Status</label>
     <%= f.select :status, Task.statuses.keys %>
 
-    <%= f.submit "Create Task", class: "btn btn-success" %>
+    <% if task.persisted? %>
+      <%= f.submit "Update Task", class: "btn btn-primary" %>
+    <% else %>
+      <%= f.submit "Create Task", class: "btn btn-success" %>
+    <% end %>
+
 
     <% end %>
 
   </div>  
 </div>
-
-

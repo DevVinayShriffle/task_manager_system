@@ -18,7 +18,6 @@ class UsersController < ApplicationController
       respond_to do |format|
         format.html { redirect_to users_tasks_path, notice: "Password updated." }
         format.json { render json: { message: "User updated successfully." }, status: :ok }
-        # format.json { render json: {user: UserSerializer.new(@current_user), meta: {message: "User registered successfully."}}, status: :ok }
       end
     end
   end

@@ -2,20 +2,11 @@
 
 <div class="tasks-wrapper">
 
-  <%# <%= turbo_frame_tag "task_form" do %>
-    <%# <%= render "new_form", user: @user, task: @user.tasks.new %>  
-  <%# <% end %> 
-
-  <%# <div id="new_task_form">
-    <%= render "new_form", user: @user, task: @user.tasks.new %>
-  <%# </div> %> 
   <div>
     <%= turbo_frame_tag "form" do %>
       <%= render "tasks/form", task: Task.new %>
     <% end %>
   </div>
-
-  
 
   <div class="tasks-header">
     <h2>Your Tasks</h2>
@@ -23,16 +14,26 @@
   </div>
 
   <div class="tasks-container">
+    <div class="table-card">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th class="actions-col" style="text-align: center;">Actions</th>
+          </tr>
+        </thead>
 
-    <%# <% @user.tasks.each do |task| %>
-      <%# <%= render "tasks/task", task: task %>
-    <%# <% end %> 
+          <tbody id="tasks">
+            <%= render @tasks %>
+          </tbody>
 
-    <%= turbo_frame_tag "tasks" do %>
-      <%= render @tasks %>
-    <% end %>
+      </table>
+    </div>
 
-    <%= paginate @tasks, remote: true %>
+    <div class="pagination-wrapper">
+      <%= paginate @tasks %>
+    </div>
 
   </div>
 </div>

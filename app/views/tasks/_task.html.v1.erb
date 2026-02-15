@@ -1,0 +1,28 @@
+<div id="<%= dom_id task %>">
+  <div class="task-row">
+
+    <div class="task-info">
+      <div class="task-title"><%= task.title %></div>
+      <div class="task-status">
+        <%= task.status %>
+      </div>
+    </div>
+
+    <div class="task-actions">
+      <%= link_to "Show",
+      users_task_path(task),
+      class: "action-link success" %>
+
+      <%= link_to "Edit",
+      edit_users_task_path(task),
+      class: "action-link primary" %>
+
+      <%= button_to "Delete",
+      users_task_path(task),
+      method: :delete,
+      class: "action-link danger delete-confirm",
+        form_class: "inline-form" %>
+    </div>
+
+  </div>
+</div>
