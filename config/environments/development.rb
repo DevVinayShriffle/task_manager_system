@@ -119,6 +119,8 @@ Rails.application.configure do
   # }
 
   # Use Redis for caching
+  config.active_job.queue_adapter = :async
+
   config.cache_store = :redis_cache_store, {
     url: "redis://localhost:6379/1", # /1 specifies the database number
     namespace: "my_app_cache"

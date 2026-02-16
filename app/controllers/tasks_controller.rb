@@ -23,32 +23,20 @@ class TasksController < ApplicationController
     end
   end
 
-  # def create
-  #   task = @current_user.tasks.create!(task_params)
-  #   respond_to do |format|
-  #     # format.html { redirect_to users_task_path(task), notice: "Task created." }
-  #     format.html { redirect_to users_tasks_path, notice: "Task created." }
-  #     format.turbo_stream
-  #     format.json { render json: {task: TaskSerializer.new(task), message: "Task created." }, status: :created }
-  #   end
-  # end
+  def create
+    @task = @current_user.tasks.create!(task_params)
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to users_tasks_path, notice: "Task created." }
+      format.json { render json: {task: TaskSerializer.new(@task), message: "Task created." }, status: :created }
+    end
+  end
 
   def edit
     respond_to do |format|
       format.turbo_stream
     end
   end
-
-
-  def create
-    @task = @current_user.tasks.build(task_params)
-    if @task.save
-      respond_to do |format|
-        format.turbo_stream
-      end
-    end
-  end
-
 
   def update
     if @task.update!(task_params)

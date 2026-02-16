@@ -56,13 +56,6 @@ class ApplicationController < ActionController::Base
         render json: { errors: error.record.errors.full_messages }, status: :unprocessable_entity
       end
     end
-    # redirect_to request.referrer
-
-    # render json: {
-    #   status: 422,
-    #   error: "Validation Failed",
-    #   message: error.record.errors.full_messages
-    # }, status: :unprocessable_entity
   end
 
   def parameter_missing(error)
