@@ -1,18 +1,21 @@
 <div  id="task_outer_form">
-  <div class="form-card" style="margin: auto;">
+  <div class="form-card" style="margin: auto; position: relative;">
   
 
     <%= form_with model: [:users, task || Task.new], data: { turbo_stream: true,
     controller: "task-form",
       action: "submit->task-form#validate" }, html: { id: "taskForm" } do |f| %>
-
+    <div style="display: flex; flex-direction: column;">
     <label>Title</label>
     <%= f.text_field :title, placeholder: "Enter title", autofocus: true, data: { task_form_target: "title" } %>
+    <div style="display: block; position: absolute; top: 24%; left: 10%;">
     <p class="field-error"
    data-task-form-target="error"></p>
+   </div>
+   </div>
 
     <label>Descryption</label>
-    <%= f.text_area :descryption, placeholder: "Enter descryption" %>
+    <%= f.text_area :descryption, placeholder: "Enter descryption",class: "descryption" %>
 
     <label>Status</label>
     <%= f.select :status, Task.statuses.keys %>
@@ -22,7 +25,6 @@
     <% else %>
       <%= f.submit "Create Task", class: "btn btn-success" %>
     <% end %>
-
 
     <% end %>
 
