@@ -1,2 +1,8 @@
-<%= turbo_stream.prepend "tasks", @task %>
 <%= turbo_stream.replace "task_outer_form", partial: "tasks/form", locals: { task: Task.new } %>
+
+<%= turbo_stream.update "tasks" do %>
+  <%= render partial: "tasks/table", locals: { tasks: Task.order(created_at: :desc).page(params[:page]) } %>
+<% end %>
+
+<%= turbo_stream.replace "pagination_frame", partial: "tasks/pagination", locals: {tasks: Task.order(created_at: :desc).page(1)} %>
+<%# <%= turbo_stream.prepend "tasks", @task %>

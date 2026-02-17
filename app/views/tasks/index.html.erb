@@ -23,17 +23,14 @@
             <th class="actions-col" style="text-align: center;">Actions</th>
           </tr>
         </thead>
-
-          <tbody id="tasks">
-            <%= render @tasks %>
-          </tbody>
+        <div id="reload">
+          <%= render "tasks/table" %>
+        </div>
 
       </table>
     </div>
 
-    <div class="pagination-wrapper">
-      <%= paginate @tasks %>
-    </div>
+    <%= render "tasks/pagination" %>
 
   </div>
 </div>

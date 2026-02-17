@@ -25,6 +25,8 @@ class TasksController < ApplicationController
 
   def create
     @task = @current_user.tasks.create!(task_params)
+    @tasks = @current_user.tasks.order(created_at: :desc).page(params[:page]).per(5)
+    
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to users_tasks_path, notice: "Task created." }
@@ -52,7 +54,7 @@ class TasksController < ApplicationController
   def destroy
     if @task.destroy
       respond_to do |format|
-        format.html { redirect_to users_tasks_path, notice: "Task deleted." }
+        format.html { redirect_back(fallback_location: users_tasks_path, notice: "Task was successfully deleted.") }
         format.json { render json: {message: "Task deleted."}, status: :ok }
       end
     end
