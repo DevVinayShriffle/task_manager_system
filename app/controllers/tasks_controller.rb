@@ -34,6 +34,7 @@ class TasksController < ApplicationController
 
   def edit
     respond_to do |format|
+      format.html
       format.turbo_stream
     end
   end
@@ -42,7 +43,7 @@ class TasksController < ApplicationController
     if @task.update!(task_params)
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to users_task_path(@task), notice: "Task updated." }
+        format.html { redirect_to users_tasks_path, notice: "Task updated." }
         format.json { render json: {task: TaskSerializer.new(@task), message: "Task updated successfully."}, status: :ok }
       end
     end

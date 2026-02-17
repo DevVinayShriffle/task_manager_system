@@ -11,7 +11,7 @@
 
   <td class="actions-cell" style="text-align: center;">
     <%# <%= link_to "Show", users_task_path(task), class: "table-action" %>
-    <%= link_to "Edit", edit_users_task_path(task), data: { turbo_stream: true }, class: "table-action edit" %>
+    <%= link_to "Edit", edit_users_task_path(task), data: { turbo_stream: true, turbo_method: :get }, class: "table-action edit" %>
     <%= button_to "Delete",
         users_task_path(task),
         method: :delete,

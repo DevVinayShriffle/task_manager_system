@@ -1,9 +1,7 @@
 <%= render "shared/navbar" %>
 
-<div class="center-wrapper">
+<div class="center-wrapper" style="margin-top: 20px;">
   <div class="form-card">
-
-    <h3>Edit Task</h3>
 
     <%= form_with model: [:users, @task], method: :patch, html: { id: "editTaskForm" } do |f| %>
 
