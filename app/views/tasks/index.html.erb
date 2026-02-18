@@ -25,6 +25,7 @@
 
     <div class="tasks-container">
       <div class="table-card">
+      <%= turbo_frame_tag "tasks_table_frame" do %>
         <table class="modern-table">
           <thead>
             <tr>
@@ -33,11 +34,10 @@
               <th class="actions-col" style="text-align: center;">Actions</th>
             </tr>
           </thead>
-          <div id="reload">
-            <%= render "tasks/table" %>
-          </div>
+          <%= render "tasks/table" %>
 
         </table>
+      <% end %>
       </div>
 
       <%= render "tasks/pagination" %>

@@ -1,8 +1,21 @@
 <%= turbo_stream.replace "task_outer_form", partial: "tasks/form", locals: { task: Task.new } %>
 
-<%= turbo_stream.update "tasks" do %>
-  <%= render partial: "tasks/table", locals: { tasks: Task.order(created_at: :desc).page(params[:page]) } %>
+<%= turbo_stream.replace "tasks_table_frame" do %>
+  <%= turbo_frame_tag "tasks_table_frame" do %>
+    <table class="modern-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Status</th>
+          <th class="actions-col" style="text-align: center;">Actions</th>
+        </tr>
+      </thead>
+
+      <%= render "tasks/table" %>
+    </table>
+  <% end %>
 <% end %>
+
 
 <%= turbo_stream.replace "pagination_frame", partial: "tasks/pagination", locals: {tasks: Task.order(created_at: :desc).page(1)} %>
 <%# <%= turbo_stream.prepend "tasks", @task %>

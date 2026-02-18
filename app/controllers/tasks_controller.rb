@@ -4,7 +4,7 @@ class TasksController < ApplicationController
 
   def index
     if params[:query].present?
-      search_results = Task.search({ query: { bool: { must: [ { multi_match: { query: params[:query], fields: ["title^3"], analyzer: "ngram_analyzer", fuzziness: "AUTO" } } ], filter: [ { term: { user_id: @current_user.id } } ] } } })
+      search_results = Task.search({ query: { bool: { must: [ { multi_match: { query: params[:query], fields: ["title"], operator: "and" } } ], filter: [ { term: { user_id: @current_user.id } } ] } } })
       @tasks = search_results.records.order(created_at: :desc)
     else
       @tasks = @current_user.tasks.order(created_at: :desc)
@@ -15,7 +15,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        if tasks.present?
+        if @tasks.present?
           render json: {tasks: @tasks.map {|t| TaskSerializer.new(t)}}, status: :ok
         else
           render json: {message: "No tasks"}, status: :ok

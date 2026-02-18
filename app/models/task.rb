@@ -11,38 +11,10 @@ class Task < ApplicationRecord
 
   before_validation :normalize_title, :normalize_descryption
 
-  after_commit on: [:create, :update] do
-    Task.import
-  end
-
   broadcasts_to ->(task) { "tasks" }
 
-  # Define mappings with edge_ngram
-  # settings index: {
-  #   analysis: {
-  #     analyzer: {
-  #       ngram_analyzer: {
-  #         tokenizer: "ngram_tokenizer",
-  #         filter: ["lowercase"]
-  #       }
-  #     },
-  #     tokenizer: {
-  #       ngram_tokenizer: {
-  #         type: "ngram",
-  #         min_gram: 3,
-  #         max_gram: 4,
-  #         token_chars: ["letter", "digit"]
-  #       }
-  #     }
-  #   }
-  # } do
-  #   mappings dynamic: 'false' do
-  #     indexes :title, type: 'text', analyzer: 'ngram_analyzer'
-  #     indexes :user_id, type: 'integer'
-  #   end
-  # end
-
   settings index: {
+    max_ngram_diff: 20,
     analysis: {
 
       analyzer: {
@@ -54,21 +26,15 @@ class Task < ApplicationRecord
       tokenizer: {
         ngram_tokenizer: {
           type: "ngram",
+          min_gram: 1,
+          max_gram: 10,
           token_chars: ["letter", "digit"]
         }
-      },
-      normalizer: {
-      lowercase_normalizer: {
-        type: 'custom',
-        filter: ['lowercase']
       }
-    }
     }
   } do
     mappings dynamic: 'false' do
-      indexes :title, type: 'text', analyzer: 'ngram_analyzer' do
-        indexes :keyword, type: 'keyword', normalizer: 'lowercase_normalizer' # Add this nested field
-      end
+      indexes :title, type: 'text', analyzer: 'ngram_analyzer'
       indexes :user_id, type: 'integer'
     end
   end
