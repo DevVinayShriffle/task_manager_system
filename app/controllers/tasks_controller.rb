@@ -4,7 +4,7 @@ class TasksController < ApplicationController
 
   def index
     if params[:query].present?
-      search_results = Task.search({ query: { bool: { must: [ { multi_match: { query: params[:query], fields: ["title^3", "descryption", "status"], analyzer: "ngram_analyzer", fuzziness: "AUTO" } } ], filter: [ { term: { user_id: @current_user.id } } ] } } })
+      search_results = Task.search({ query: { bool: { must: [ { multi_match: { query: params[:query], fields: ["title^3"], analyzer: "ngram_analyzer", fuzziness: "AUTO" } } ], filter: [ { term: { user_id: @current_user.id } } ] } } })
       @tasks = search_results.records.order(created_at: :desc)
     else
       @tasks = @current_user.tasks.order(created_at: :desc)

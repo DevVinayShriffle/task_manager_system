@@ -372,6 +372,8 @@ GEM
       ffi (~> 1.12)
       logger
     rubyzip (3.2.2)
+    searchkick (6.0.3)
+      activemodel (>= 7.2)
     securerandom (0.4.1)
     selenium-webdriver (4.40.0)
       base64 (~> 0.2)
@@ -463,6 +465,7 @@ DEPENDENCIES
   capybara
   debug
   dotenv-rails
+  elasticsearch
   elasticsearch-model
   elasticsearch-rails
   factory_bot_rails
@@ -479,6 +482,7 @@ DEPENDENCIES
   redis (>= 4.0.1)
   rspec-rails
   rubocop-rails-omakase
+  searchkick
   selenium-webdriver
   shoulda-callback-matchers
   shoulda-matchers

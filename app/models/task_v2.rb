@@ -18,33 +18,8 @@ class Task < ApplicationRecord
   broadcasts_to ->(task) { "tasks" }
 
   # Define mappings with edge_ngram
-  # settings index: {
-  #   analysis: {
-  #     analyzer: {
-  #       ngram_analyzer: {
-  #         tokenizer: "ngram_tokenizer",
-  #         filter: ["lowercase"]
-  #       }
-  #     },
-  #     tokenizer: {
-  #       ngram_tokenizer: {
-  #         type: "ngram",
-  #         min_gram: 3,
-  #         max_gram: 4,
-  #         token_chars: ["letter", "digit"]
-  #       }
-  #     }
-  #   }
-  # } do
-  #   mappings dynamic: 'false' do
-  #     indexes :title, type: 'text', analyzer: 'ngram_analyzer'
-  #     indexes :user_id, type: 'integer'
-  #   end
-  # end
-
   settings index: {
     analysis: {
-
       analyzer: {
         ngram_analyzer: {
           tokenizer: "ngram_tokenizer",
@@ -54,31 +29,27 @@ class Task < ApplicationRecord
       tokenizer: {
         ngram_tokenizer: {
           type: "ngram",
+          min_gram: 1,
+          max_gram: 2,
           token_chars: ["letter", "digit"]
         }
-      },
-      normalizer: {
-      lowercase_normalizer: {
-        type: 'custom',
-        filter: ['lowercase']
       }
-    }
     }
   } do
     mappings dynamic: 'false' do
-      indexes :title, type: 'text', analyzer: 'ngram_analyzer' do
-        indexes :keyword, type: 'keyword', normalizer: 'lowercase_normalizer' # Add this nested field
-      end
+      indexes :title, type: 'text', analyzer: 'ngram_analyzer'
+      indexes :descryption, type: 'text', analyzer: 'ngram_analyzer'
+      indexes :status, type: 'text', analyzer: 'ngram_analyzer'
       indexes :user_id, type: 'integer'
     end
   end
-
 
   def as_indexed_json(options = {})
     self.as_json(
       only: [:title, :descryption, :status, :user_id]
       )
   end
+
 
   private
 
