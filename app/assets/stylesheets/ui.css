@@ -422,4 +422,20 @@ input, textarea, select {
   color: #ef4444;
 }
 
+/* ===== Elastic ===== */
+.header-elastic {
+  display: flex; 
+  flex-direction: row-reverse; 
+  justify-content: space-between; 
+  align-items: flex-end; 
+  padding: 0px 10px;
+}
 
+.elastic {
+  display: flex;
+  gap: 5px;
+}
+
+.elastic .submit {
+  width: 30%;
+}

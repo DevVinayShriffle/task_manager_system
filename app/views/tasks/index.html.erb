@@ -1,6 +1,6 @@
 <%= render "shared/navbar" %>
 
-<div class="tasks-wrapper">
+<div class="tasks-wrapper" data-controller="reload-redirect" data-redirect-path="<%= users_tasks_path %>" >
 
   <div>
     <%= turbo_frame_tag "form" do %>
@@ -8,29 +8,41 @@
     <% end %>
   </div>
 
-  <div class="tasks-header">
-    <h2>Your Tasks</h2>
+  <div class="header-elastic">
+    <div style="width: 350px; margin-top: 5px;">
+      <%= form_with url: users_tasks_path, method: :get, class: "elastic", data: { controller: "search", turbo_frame: "tasks_frame" } do |f| %>
 
+        <%= f.text_field :query, placeholder: "Search tasks...", class: "search", data: { action: "input->search#submit" } %>
+        <%= f.submit "Search", class: "submit" %>
+      <% end %>
+    </div>
+    <div class="tasks-header">
+      <h2>Your Tasks</h2>
+    </div>
   </div>
 
-  <div class="tasks-container">
-    <div class="table-card">
-      <table class="modern-table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Status</th>
-            <th class="actions-col" style="text-align: center;">Actions</th>
-          </tr>
-        </thead>
-        <div id="reload">
-          <%= render "tasks/table" %>
-        </div>
+  <%= turbo_frame_tag "tasks_frame" do %>
 
-      </table>
+    <div class="tasks-container">
+      <div class="table-card">
+        <table class="modern-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Status</th>
+              <th class="actions-col" style="text-align: center;">Actions</th>
+            </tr>
+          </thead>
+          <div id="reload">
+            <%= render "tasks/table" %>
+          </div>
+
+        </table>
+      </div>
+
+      <%= render "tasks/pagination" %>
     </div>
 
-    <%= render "tasks/pagination" %>
+  <% end %>
 
-  </div>
 </div>
