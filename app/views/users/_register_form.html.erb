@@ -20,6 +20,12 @@
       1 number, 6-8 characters and no spaces.
     </p>
 
+    <% if flash[:error] && flash[:error].match("Email has already been taken") %>
+    <div>
+      <p style="color:#e53e3e;font-size: 12px;"><%= flash[:error].match("Email has already been taken") %></p>
+    </div>
+    <% end %>
+
     <%= f.submit "Register", class: "btn btn-success" %>
   <% end %>
 
