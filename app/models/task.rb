@@ -11,7 +11,7 @@ class Task < ApplicationRecord
 
   before_validation :normalize_title, :normalize_descryption
 
-  after_create :schedule_status_check
+  after_create :schedule_status_check, :schedule_progress_check, :schedule_progress_status
   after_update :schedule_progress_check, :schedule_progress_status
   
   broadcasts_to ->(task) { "tasks" }
