@@ -11,6 +11,9 @@ class Task < ApplicationRecord
 
   before_validation :normalize_title, :normalize_descryption
 
+  after_create :schedule_status_check
+  after_update :schedule_progress_check, :schedule_progress_status
+  
   broadcasts_to ->(task) { "tasks" }
 
   settings index: {
@@ -56,5 +59,17 @@ class Task < ApplicationRecord
     if (descryption)
       self.descryption = descryption.strip #if descryption.present?
     end
+  end
+
+  def schedule_status_check
+    TaskStatusCheckJob.set(wait: 30.seconds).perform_later(self.id)
+  end
+
+  def schedule_progress_check
+    TaskProgressCheckJob.set(wait: 45.seconds).perform_later(self.id)
+  end
+
+  def schedule_progress_status
+    TaskProgressUpdateJob.set(wait: 1.minute).perform_later(self.id)
   end
 end

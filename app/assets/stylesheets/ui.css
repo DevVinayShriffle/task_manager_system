@@ -430,12 +430,3 @@ input, textarea, select {
   align-items: flex-end; 
   padding: 0px 10px;
 }
-
-.elastic {
-  display: flex;
-  gap: 5px;
-}
-
-.elastic .submit {
-  width: 30%;
-}

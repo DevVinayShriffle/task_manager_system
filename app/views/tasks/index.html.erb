@@ -9,17 +9,18 @@
   </div>
 
   <div class="header-elastic">
-    <div style="width: 350px; margin-top: 5px;">
+    <div style="width: 25%; margin-top: 5px;">
       <%= form_with url: users_tasks_path, method: :get, class: "elastic", data: { controller: "search", turbo_frame: "tasks_frame" } do |f| %>
 
-        <%= f.text_field :query, placeholder: "Search tasks...", class: "search", data: { action: "input->search#submit" } %>
-        <%= f.submit "Search", class: "submit" %>
+        <%= f.text_field :query, placeholder: "Search tasks...", data: { action: "input->search#submit" } %>
       <% end %>
     </div>
     <div class="tasks-header">
       <h2>Your Tasks</h2>
     </div>
   </div>
+
+  <%# <%= turbo_stream_from "job_status_channel" %>
 
   <%= turbo_frame_tag "tasks_frame" do %>
 

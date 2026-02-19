@@ -1,0 +1,11 @@
+<tbody id="tasks" style="width: 100%;">
+  <% if @tasks.present? %>
+    <%= render @tasks %>
+  <% else %>
+    <tr>
+      <td colspan="3" style="text-align: center; padding: 20px;">
+        No tasks available
+      </td>
+    </tr>
+  <% end %>
+</tbody>

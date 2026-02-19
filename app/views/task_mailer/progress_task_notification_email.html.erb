@@ -1,0 +1,13 @@
+<h1>Task status update!!</h>
+ <p>
+   Hi, user: <%= @user.email %> <br>
+   Your Task is in progress state and accessing the limit of one day. <br>
+   If you didn't update it's status then it will be set to pending after 2 hrs. <br>
+   Task Details <br>
+   Title: <%= @task.title %> <br>
+   Descryption: <%= @task.descryption %> <br>
+   Status: <%= @task.status %> <br>
+   created_at: <%= @task.created_at %> <br>
+   updated_at: <%= @task.updated_at %> <br>
+ </p>
+<p>Thanks for joining and have a great day!</p>
