@@ -41,7 +41,7 @@ class UsersController < ApplicationController
         )
       }, status: :ok
     else
-      render json: {message: "Invalid email or password."}
+      render json: {message: "Invalid email or password."}, status: :unauthorized
     end
   end
 
