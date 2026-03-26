@@ -4,12 +4,12 @@ class UsersController < ApplicationController
   def create
     user = User.create!(user_params)
     set_token(user)
-    # render json: user, serializer: UserSerializer, status: :created
+    render json: user, serializer: UserSerializer, message: "User registered successfully", status: :created
     # render json:{
     #   message: "User Registered Successfully.",
     #   user: user,serializer: UserSerializer
     # }, status: ok
-    render_with_serializer(user, UserSerializer, "User Created Successfully.", :created)
+    # render_with_serializer(user, UserSerializer, "User Created Successfully.", status: :created)
   end
 
   def update

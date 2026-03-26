@@ -1,6 +1,6 @@
-import { LoginView } from "views/login_view";
+import { AppRouter } from "routers/app_router";
 
 $(document).ready(function () {
-  var loginView = new LoginView();
-  loginView.render();
+  var router = new AppRouter();
+  Backbone.history.start({ pushState: true });
 });

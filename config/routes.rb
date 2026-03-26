@@ -7,4 +7,7 @@ Rails.application.routes.draw do
   end
 
   post '/users/login', to: 'users#login'
+
+  # ADD THIS (VERY IMPORTANT)
+  get '*path', to: 'home#index', via: :all
 end

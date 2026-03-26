@@ -29,18 +29,18 @@ export var LoginView = Backbone.View.extend({
         }
       },
       success: function (res, status, xhr) {
-        alert("Login success");
+        console.log("Login success");
         var token = xhr.getResponseHeader("Authorization");
         localStorage.setItem("token", token);
       },
       error: function () {
-        alert("Login failed");
+        console.log("Login failed");
       }
     });
   },
 
-  goRegister: function () {
-    var signupView = new SignupView();
-    signupView.render();
-  }
+  goRegister: function (e) {
+    e.preventDefault();
+    Backbone.history.navigate("signup", { trigger: true });
+  },
 });
