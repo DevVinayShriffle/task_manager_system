@@ -32,6 +32,8 @@ export var SignupView = Backbone.View.extend({
 
         var token = xhr.getResponseHeader("Authorization");
         localStorage.setItem("token", token);
+
+        Backbone.history.navigate("dashboard", {trigger: true});
       },
       error: function (err) {
         console.log("Signup failed");

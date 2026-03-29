@@ -21,3 +21,51 @@
 
   <p>Already user? <a href="/login" id="go-login">Login</a></p>
 </script>
+
+<script type="text/template" id="dashboard-template">
+  <h2>Dashboard</h2>
+
+  <button id="logout-btn">Logout</button>
+
+  <hr>
+
+  <h3>Create Task</h3>
+
+  <input type="text" id="title" placeholder="Enter title"><br><br>
+  <textarea id="description" placeholder="Enter description"></textarea><br><br>
+
+  <select id="status">
+    <option value="pending">Pending</option>
+    <option value="progress">Progress</option>
+    <option value="completed">Completed</option>
+  </select><br><br>
+
+  <button id="create-task-btn">Create Task</button>
+
+  <hr>
+
+  <h3>Your Tasks</h3>
+
+  <input type="text" placeholder="Search tasks..."><br><br>
+
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="task-list">
+      <!-- tasks will come later -->
+      <tr>
+        <td>Sample Task</td>
+        <td>Pending</td>
+        <td>
+          <button>Edit</button>
+          <button>Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</script>
