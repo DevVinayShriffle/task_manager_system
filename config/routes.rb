@@ -3,10 +3,14 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
   
-  root "users#login"
+  # root "users#login"
+  root "home#index"
+
   resource :users, only: [:create, :update, :destroy, :edit] do
     post :login, on: :collection
     delete :logout, on: :collection
     resources :tasks
   end
+
+  get '*path', to: 'home#index', via: :all
 end
