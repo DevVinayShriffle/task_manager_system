@@ -1,3 +1,8 @@
+<%# 1. This sends the CKEditor scripts to the <%= yield :head % > in your layout %>
+<% content_for :head do %>
+  <%= ckeditor5_assets %>
+<% end %>
+
 <div  id="task_outer_form">
   <div class="form-card" style="margin: auto; position: relative;">
   
@@ -15,7 +20,8 @@
    </div>
 
     <label>Descryption</label>
-    <%= f.text_area :descryption, placeholder: "Enter descryption",class: "descryption" %>
+    <%#= f.text_area :descryption, placeholder: "Enter descryption",class: "descryption" %>
+    <%= f.ckeditor5 :descryption, placeholder: "Enter descryption" %>
 
     <label>Status</label>
     <%= f.select :status, Task.statuses.keys %>

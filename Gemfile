@@ -27,6 +27,8 @@ gem "redis", ">= 4.0.1"
 gem 'kaminari'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+gem 'ckeditor5'
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

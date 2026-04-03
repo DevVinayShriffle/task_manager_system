@@ -1,3 +1,7 @@
+<% content_for :head do %>
+  <%= ckeditor5_assets %>
+<% end %>
+
 <%= render "shared/navbar" %>
 
 <div class="center-wrapper">
@@ -6,7 +10,12 @@
     <h3>Task Details</h3>
 
     <p><b>Title:</b> <%= @task.title %></p>
-    <p><b>Description:</b> <%= @task.descryption %></p>
+    <p><b>Description:</b> <%#= @task.descryption %></p>
+    <%# Example for show.html.erb %>
+    <div class="ck-content">
+      <%= sanitize @task.descryption %>
+    </div>
+
     <p><b>Status:</b> <%= @task.status %></p>
 
     <%= link_to "Back", users_tasks_path, class: "btn btn-primary" %>

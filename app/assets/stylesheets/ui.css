@@ -430,3 +430,8 @@ input, textarea, select {
   align-items: flex-end; 
   padding: 0px 10px;
 }
+
+/* Set a minimum height so it doesn't look like a tiny box */
+.ck-content {
+    min-height: 200px;
+}
