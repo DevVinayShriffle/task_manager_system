@@ -1,26 +1,46 @@
-var LoginView = Marionette.View.extend({
-  template: "#login-template",
+window.LoginView = Marionette.View.extend({
+  template: JST["app/templates/login"],
 
   events: {
-    "submit #login-form": "loginUser"
+    "submit #loginForm": "login"
   },
 
-  loginUser: function (e) {
+  login: function (e) {
     e.preventDefault();
 
     var email = this.$("#email").val();
     var password = this.$("#password").val();
 
-    API.request({
+    $.ajax({
       url: "/users/login",
       method: "POST",
-      data: { user: { email: email, password: password } },
+      contentType: "application/json",
+      dataType: 'json',
+      data: JSON.stringify({
+      	user: {
+	      email: email,
+	      password: password
+	    }
+      }),
+
       success: function (res) {
-        localStorage.setItem("token", res.meta.token);
-        Backbone.history.navigate("tasks", { trigger: true });
+        console.log("Login success");
+
+        if (res.meta && res.meta.token) {
+		    localStorage.setItem("token", res.meta.token);
+		}
+
+		  // Navigate via router instead of directly showing view
+		  router.tasksCollection = new TaskCollection();
+		  router.tasksCollection.fetch({
+		    success: function() {
+		      router.navigate("users/tasks", { trigger: true });
+		    }
+		  });
       },
+
       error: function () {
-        alert("Invalid credentials");
+        $("#error").text("Invalid email or password");
       }
     });
   }

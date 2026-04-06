@@ -12,5 +12,9 @@ Rails.application.routes.draw do
     resources :tasks
   end
 
-  get '*path', to: 'home#index', via: :all
+  # get '*path', to: 'home#index', via: :all
+  # Catch-all for frontend SPA
+  get '*path', to: 'home#index', constraints: lambda { |req|
+    !req.path.starts_with?("/rails/health") && !req.path.starts_with?("/sidekiq")
+  }, via: :all
 end

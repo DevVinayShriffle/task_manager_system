@@ -29,6 +29,7 @@ gem 'kaminari'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 gem "jsbundling-rails"
+gem 'ejs'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

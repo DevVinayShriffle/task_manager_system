@@ -1,26 +1,43 @@
-var AppRouter = Marionette.AppRouter.extend({
-  appRoutes: {
+window.AppRouter = Backbone.Router.extend({
+  routes: {
     "": "showLogin",
-    "tasks": "showTasks"
-  }
-});
+    "login": "showLogin",
+    "signup": "showSignup",
+    "users/tasks": "showTasksDashboard"
+  },
 
-var Controller = {
   showLogin: function () {
     App.showView(new LoginView());
   },
 
-  showTasks: function () {
-    var tasks = new TaskCollection();
+  showSignup: function () {
+    App.showView(new SignupView());
+  },
 
-    tasks.fetch({
-      success: function () {
-        App.showView(new TaskListView({ collection: tasks }));
-      }
-    });
+  showTasksDashboard: function () {
+    // App.showView(new TasksDashboardView());
+    if (!this.tasksCollection) {
+      this.tasksCollection = new TaskCollection();
+      var self = this;
+
+      this.tasksCollection.fetch({
+        success: function () {
+          App.showView(new TasksDashboardView({ collection: self.tasksCollection }));
+        }
+      });
+    } else {
+      App.showView(new TasksDashboardView({ collection: this.tasksCollection }));
+    }
   }
-};
+});
 
+// Start router AFTER app starts
 App.on("start", function () {
-  new AppRouter({ controller: Controller });
+  console.log("Router starting");
+
+  window.router = new AppRouter();
+
+  if (!Backbone.History.started) {
+    Backbone.history.start({pushState: true});
+  }
 });

@@ -124,6 +124,7 @@ GEM
       railties (>= 6.1)
     drb (2.2.3)
     ed25519 (1.4.0)
+    ejs (1.1.1)
     elastic-transport (8.4.1)
       faraday (< 3)
       multi_json
@@ -469,6 +470,7 @@ DEPENDENCIES
   capybara
   debug
   dotenv-rails
+  ejs
   elasticsearch-model
   elasticsearch-rails
   factory_bot_rails

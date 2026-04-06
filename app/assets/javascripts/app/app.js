@@ -1,18 +1,18 @@
-console.log("Appjs")
-
-var App = new Marionette.Application({
+// Create global App
+window.App = new Marionette.Application({
   region: "#app"
 });
 
-App.on("start", function () {
-  console.log("App mounted on #app");
+// Optional helper to show views
+App.showView = function(view) {
+  this.getRegion().show(view);
+};
 
-  if (Backbone.history) {
-    Backbone.history.start();
-  }
+App.on("start", function () {
+  console.log("App started");
 });
 
-// Start app AFTER everything is loaded
+// Start app when DOM is ready
 $(document).ready(function () {
   console.log("DOM loaded");
   App.start();

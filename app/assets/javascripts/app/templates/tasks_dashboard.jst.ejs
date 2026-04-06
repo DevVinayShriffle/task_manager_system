@@ -1,0 +1,18 @@
+<h2>Tasks Dashboard</h2>
+
+<form id="taskForm">
+  <input type="text" id="taskTitle" placeholder="Task Title" required>
+  <textarea id="taskDescription" placeholder="Task Description"></textarea>
+  <button type="submit">Save Task</button>
+</form>
+
+<h3>Your Tasks</h3>
+<ul>
+  <% collection.each(function(task) { %>
+    <li>
+      <strong><%= task.get("title") %></strong>: <% task.get("descryption") %>
+      <button class="edit-task" data-id="<%= task.id %>">Edit</button>
+      <% console.log(task.id) %>
+    </li>
+  <% }); %>
+</ul>
