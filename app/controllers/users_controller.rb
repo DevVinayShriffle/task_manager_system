@@ -34,9 +34,10 @@ class UsersController < ApplicationController
 
   def login
     return if request.get?
+    byebug
     user = User.find_by(email: params[:user][:email].strip.downcase)
 
-    if user && user.authenticate(params[:user][:password])
+    if user && verify_recaptcha(model: user) && user.authenticate(params[:user][:password])
       token = set_token(user)
       respond_to do |format|
         format.html { redirect_to users_tasks_path, notice: "Logged in successfully." }

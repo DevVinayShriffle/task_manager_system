@@ -28,6 +28,9 @@
   </div>
   <% end %>
 
+  <%= recaptcha_tags %>
+  <small class="error-message" data-auth-target="captchaError"></small>
+
   <%= f.submit "Login", class: "btn btn-primary" %>
 
   <% end %>
