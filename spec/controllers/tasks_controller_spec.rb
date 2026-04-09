@@ -71,7 +71,7 @@ RSpec.describe TasksController, type: :controller do
       it 'creates task (HTML)' do
         post :create, params: {task: valid_params}, format: :html
         created_task = Task.last
-        expect(response).to redirect_to(users_task_path(created_task))
+        expect(response).to redirect_to(users_tasks_path)
         expect(flash[:notice]).to eq("Task created.")
       end
 
@@ -115,7 +115,7 @@ RSpec.describe TasksController, type: :controller do
       it 'update task (HTML)' do
         patch :update, params: {id: task.id, task: valid_params}, format: :html
 
-        expect(response).to redirect_to(users_task_path(task))
+        expect(response).to redirect_to(users_tasks_path)
         expect(flash[:notice]).to eq("Task updated.")
       end
 
@@ -160,7 +160,7 @@ RSpec.describe TasksController, type: :controller do
       }.to change(Task, :count).by(-1)
 
       expect(response).to redirect_to(users_tasks_path)
-      expect(flash[:notice]).to eq("Task deleted.")
+      expect(flash[:notice]).to eq("Task was successfully deleted.")
     end
 
     it 'destroy task (JSON)' do
