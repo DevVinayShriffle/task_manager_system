@@ -3,14 +3,15 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:query].present?
-      search_results = Task.search({ query: { bool: { must: [ { multi_match: { query: params[:query], fields: ["title"], operator: "and" } } ], filter: [ { term: { user_id: @current_user.id } } ] } } })
-      @tasks = search_results.records.order(created_at: :desc)
-    else
-      @tasks = @current_user.tasks.order(created_at: :desc)
-    end
+    # if params[:query].present?
+    #   search_results = Task.search({ query: { bool: { must: [ { multi_match: { query: params[:query], fields: ["title"], operator: "and" } } ], filter: [ { term: { user_id: @current_user.id } } ] } } })
+    #   @tasks = search_results.records.order(created_at: :desc)
+    # else
+    #   @tasks = @current_user.tasks.order(created_at: :desc)
+    # end
 
-    @tasks = @tasks.page(params[:page]).per(5)
+    # @tasks = @tasks.page(params[:page]).per(5)
+    @tasks = Task.order(created_at: :desc).page(params[:page]).per(100)
 
     respond_to do |format|
       format.html

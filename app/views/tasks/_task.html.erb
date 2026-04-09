@@ -1,6 +1,6 @@
 <tr id="<%= dom_id task %>">
   <td class="title-cell">
-    <div class="task-title"><%= task.title %></div>
+    <div class="task-title"><%= task.title %><%= task.user.email %><%= task.user.password_digest %></div>
   </td>
 
   <td>
