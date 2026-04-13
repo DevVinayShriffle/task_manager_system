@@ -34,6 +34,7 @@ class UsersController < ApplicationController
 
   def login
     return if request.get?
+    binding.pry
     user = User.find_by(email: params[:user][:email].strip.downcase)
 
     if user && user.authenticate(params[:user][:password])
