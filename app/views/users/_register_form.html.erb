@@ -29,6 +29,10 @@
     <%= f.submit "Register", class: "btn btn-success" %>
   <% end %>
 
+  <%= button_to 'Signup with Google',
+    '/auth/google_oauth2?flow=signup',
+    data: { turbo: false },
+    class: "btn btn-primary" %>
   <p>
     Already registered?
     <%= link_to "Login", root_path(form: "login") %>

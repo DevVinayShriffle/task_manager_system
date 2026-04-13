@@ -9,4 +9,7 @@ Rails.application.routes.draw do
     delete :logout, on: :collection
     resources :tasks
   end
+
+  get '/auth/:provider/callback', to: 'users#omniauth'
+  get '/auth/failure', to: redirect('/')
 end

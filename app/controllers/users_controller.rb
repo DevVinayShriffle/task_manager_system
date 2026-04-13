@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authorize_request, except: [ :create, :login ]
+  before_action :authorize_request, except: [ :create, :login , :omniauth]
 
   def create
     user = User.create!(user_params)
@@ -60,6 +60,36 @@ class UsersController < ApplicationController
     end
   end
 
+  def omniauth
+    auth = request.env['omniauth.auth']
+    email = auth['info']['email']
+
+    user = User.find_by(email: email)
+    flow = request.env['omniauth.params']['flow']
+
+    # signup
+    if(flow == 'signup')
+      if user
+        return redirect_to root_path(form: "login"), notice: 'User already exist. Please, Login.'
+      end
+
+      user = User.create!(email: email, password: generate_valid_password)
+
+      token = set_token(user)
+      return redirect_to users_tasks_path, notice: 'User Registered Successfully.'
+    end
+
+    # login
+    if(flow == 'login')
+      if user
+        token = set_token(user)
+        return redirect_to users_tasks_path, notice: 'User Logged in successfully.'
+      end
+
+      redirect_to root_path, notice: 'User not found. Please, signup.' 
+    end
+  end
+
   private
 
   def user_params
@@ -72,5 +102,31 @@ class UsersController < ApplicationController
     response.headers["Authorization"] = token
     session[:token] = token
     token
+  end
+
+  def generate_valid_password
+    # 1. Define character sets
+    uppercase = ('A'..'Z').to_a
+    lowercase = ('a'..'z').to_a
+    digits    = ('0'..'9').to_a
+    specials  = %w[@ # $ % & * ! ?] # Add more as needed
+    
+    # 2. Start with one of each required character to guarantee validity
+    password_chars = [
+      uppercase.sample,
+      lowercase.sample,
+      digits.sample,
+      specials.sample
+    ]
+
+    # 3. Fill the remaining length (total must be 6 to 8)
+    # Since we already have 4 chars, we need 2 to 4 more.
+    remaining_length = rand(2..4)
+    pool = uppercase + lowercase + digits + specials
+    
+    remaining_length.times { password_chars << pool.sample }
+
+    # 4. Shuffle to ensure mandatory characters aren't always at the start
+    password_chars.shuffle.join
   end
 end
